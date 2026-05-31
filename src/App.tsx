@@ -6,6 +6,7 @@ import { FeedPage } from './pages/FeedPage'
 import { ExplorePage } from './pages/ExplorePage'
 import { ProfilePage } from './pages/ProfilePage'
 import { SettingsPage } from './pages/SettingsPage'
+import { MessagesPage } from './pages/MessagesPage'
 import { ProtectedRoute } from './components/ProtectedRoute'
 
 function App() {
@@ -36,6 +37,14 @@ function App() {
           element={
             <ProtectedRoute>
               <ProfilePage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/messages"
+          element={
+            <ProtectedRoute>
+              <MessagesPage />
             </ProtectedRoute>
           }
         />

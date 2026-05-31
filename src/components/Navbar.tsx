@@ -7,6 +7,7 @@ import { PostModal } from './PostModal'
 import { SearchModal } from './SearchModal'
 import { NotificationPanel } from './NotificationPanel'
 import { useNotifications } from '../hooks/useNotifications'
+import { useUnreadMessages } from '../hooks/useUnreadMessages'
 
 export const Navbar: React.FC = () => {
   const { t } = useTranslation()
@@ -18,6 +19,7 @@ export const Navbar: React.FC = () => {
   const [searchOpen, setSearchOpen] = useState(false)
   const [notifOpen, setNotifOpen] = useState(false)
   const { unreadCount, markAllRead } = useNotifications()
+  const { unreadMessages } = useUnreadMessages()
   const menuRef = useRef<HTMLDivElement>(null)
   const notifRef = useRef<HTMLDivElement>(null)
 
@@ -84,6 +86,22 @@ export const Navbar: React.FC = () => {
               ].join(' ')}
             >
               Explorar
+            </Link>
+            <Link
+              to="/messages"
+              className={[
+                'relative px-4 py-2 rounded-lg text-sm font-grotesk font-semibold transition-colors duration-200',
+                isActive('/messages')
+                  ? 'text-bz-electric bg-bz-electric/10'
+                  : 'text-bz-white/60 hover:text-bz-white hover:bg-bz-surface',
+              ].join(' ')}
+            >
+              Mensagens
+              {unreadMessages > 0 && (
+                <span className="absolute -top-0.5 -right-0.5 min-w-[16px] h-4 px-0.5 rounded-full bg-bz-pink text-white text-[10px] font-bold flex items-center justify-center leading-none">
+                  {unreadMessages > 9 ? '9+' : unreadMessages}
+                </span>
+              )}
             </Link>
             {user && (
               <Link

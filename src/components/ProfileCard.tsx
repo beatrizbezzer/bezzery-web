@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { Avatar } from './ui/Avatar'
 import { Tag, autoVariant } from './ui/Tag'
@@ -18,6 +18,7 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
   onFollowToggle,
 }) => {
   const { t } = useTranslation()
+  const navigate = useNavigate()
 
   return (
     <div className="bg-bz-card border border-bz-surface rounded-xl overflow-hidden">
@@ -51,12 +52,23 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
             )}
           </div>
           {!isOwnProfile && (
-            <FollowButton
-              username={user.username}
-              isFollowing={user.isFollowing ?? false}
-              onToggle={onFollowToggle}
-              size="md"
-            />
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => navigate(`/messages?with=${user.id}`)}
+                className="w-10 h-10 flex items-center justify-center rounded-lg border border-bz-surface text-bz-white/50 hover:text-bz-electric hover:border-bz-electric/40 transition-all duration-200 cursor-pointer"
+                title="Enviar mensagem"
+              >
+                <svg style={{ width: '18px', height: '18px' }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                </svg>
+              </button>
+              <FollowButton
+                username={user.username}
+                isFollowing={user.isFollowing ?? false}
+                onToggle={onFollowToggle}
+                size="md"
+              />
+            </div>
           )}
           {isOwnProfile && (
             <Link
