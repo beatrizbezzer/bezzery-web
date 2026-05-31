@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
 import { Avatar } from './ui/Avatar'
 import { FollowButton } from './FollowButton'
 import { likePost, unlikePost, deletePost } from '../api/posts'
@@ -30,7 +29,6 @@ function formatRelativeTime(dateStr: string): string {
 }
 
 export const PostCard: React.FC<PostCardProps> = ({ post, onDelete }) => {
-  const { t } = useTranslation()
   const { user: currentUser } = useAuthStore()
   const [liked, setLiked] = useState(post.isLiked)
   const [likesCount, setLikesCount] = useState(post.likesCount)
