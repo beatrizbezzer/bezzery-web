@@ -1,0 +1,80 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: #080810;
+    color: #F0F0FF;
+    font-family: 'Space Grotesk', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    padding: 0;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #0D0D1A;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #7B4FFF;
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #00F5C4;
+  }
+
+  #root {
+    min-height: 100vh;
+    width: 100%;
+    margin: 0;
+    text-align: left;
+    border: none;
+    display: block;
+    box-sizing: border-box;
+  }
+}
+
+@layer utilities {
+  .gradient-text {
+    background: linear-gradient(135deg, #00F5C4 0%, #7B4FFF 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .gradient-text-pink {
+    background: linear-gradient(135deg, #FF3E9D 0%, #7B4FFF 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .glow-electric {
+    box-shadow: 0 0 20px rgba(0, 245, 196, 0.3);
+  }
+
+  .glow-violet {
+    box-shadow: 0 0 20px rgba(123, 79, 255, 0.3);
+  }
+
+  .glow-pink {
+    box-shadow: 0 0 20px rgba(255, 62, 157, 0.3);
+  }
+}

@@ -1,0 +1,99 @@
+{
+  "nav": {
+    "feed": "Feed",
+    "profile": "Perfil",
+    "settings": "Configuración",
+    "logout": "Cerrar sesión"
+  },
+  "auth": {
+    "login": "Iniciar sesión",
+    "register": "Registrarse",
+    "logout": "Cerrar sesión",
+    "email_or_username": "Email o nombre de usuario",
+    "password": "Contraseña",
+    "confirm_password": "Confirmar contraseña",
+    "name": "Nombre completo",
+    "username": "Nombre de usuario",
+    "welcome_back": "Bienvenido de nuevo",
+    "join": "Unirse a Bezzery",
+    "sign_in": "Iniciar sesión",
+    "create_account": "Crear cuenta",
+    "no_account": "¿No tienes cuenta?",
+    "has_account": "¿Ya tienes cuenta?",
+    "create_now": "Crear ahora",
+    "sign_in_link": "Iniciar sesión",
+    "email_sent_title": "Confirma tu email",
+    "email_sent_body": "Enviamos un enlace de confirmación a",
+    "go_to_login": "Ir al inicio de sesión",
+    "tagline": "Be who you are",
+    "terms": "Al continuar aceptas los Términos y la Política de Privacidad de Bezzery",
+    "invalid_credentials": "Credenciales inválidas",
+    "username_hint": "3-20 chars. Solo minúsculas, números, punto, _ o -"
+  },
+  "setup": {
+    "title": "Configura tu perfil",
+    "subtitle": "Casi listo — completa tu perfil",
+    "display_name": "Nombre visible",
+    "choose_display": "Elige cómo aparecerás en Bezzery.",
+    "enter_bezzery": "Entrar a Bezzery"
+  },
+  "feed": {
+    "title": "Tu Feed",
+    "subtitle": "Lo que está pasando ahora",
+    "latest": "Últimas publicaciones",
+    "no_posts": "Aún no hay publicaciones",
+    "no_posts_sub": "Sé el primero en publicar algo.",
+    "error": "Error al cargar el feed. Actualiza la página.",
+    "retry": "Reintentar"
+  },
+  "post": {
+    "placeholder": "¿Qué estás pensando?",
+    "submit": "Publicar",
+    "like": "Me gusta",
+    "comment": "Comentar",
+    "comments": "Comentarios",
+    "no_comments": "Aún no hay comentarios. ¡Sé el primero!",
+    "add_comment": "Escribe un comentario...",
+    "post_comment": "Comentar",
+    "chars_left": "caracteres restantes"
+  },
+  "profile": {
+    "followers": "Seguidores",
+    "following": "Siguiendo",
+    "posts": "Publicaciones",
+    "follow": "Seguir",
+    "unfollow": "Dejar de seguir",
+    "edit_profile": "Editar perfil",
+    "no_posts": "Aún no hay publicaciones"
+  },
+  "settings": {
+    "title": "Configuración",
+    "save": "Guardar cambios",
+    "saving": "Guardando...",
+    "saved": "¡Perfil actualizado!",
+    "display_name": "Nombre visible",
+    "bio": "Biografía",
+    "bio_placeholder": "Cuéntales algo sobre ti...",
+    "avatar": "Foto de perfil",
+    "banner": "Foto de portada",
+    "upload_avatar": "Subir foto de perfil",
+    "upload_banner": "Subir foto de portada",
+    "uploading": "Subiendo...",
+    "tags": "Intereses",
+    "add_tag": "Agregar interés",
+    "country": "País",
+    "select_country": "Selecciona tu país",
+    "avatar_hint": "JPG, PNG o GIF. Máximo 2MB.",
+    "banner_hint": "Recomendado: 1500x500px. Máximo 5MB."
+  },
+  "common": {
+    "loading": "Cargando...",
+    "error": "Error",
+    "close": "Cerrar",
+    "cancel": "Cancelar",
+    "confirm": "Confirmar",
+    "back": "Volver",
+    "required": "requerido",
+    "optional": "opcional"
+  }
+}

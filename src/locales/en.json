@@ -1,0 +1,99 @@
+{
+  "nav": {
+    "feed": "Feed",
+    "profile": "Profile",
+    "settings": "Settings",
+    "logout": "Sign out"
+  },
+  "auth": {
+    "login": "Sign in",
+    "register": "Register",
+    "logout": "Sign out",
+    "email_or_username": "Email or username",
+    "password": "Password",
+    "confirm_password": "Confirm password",
+    "name": "Full name",
+    "username": "Username",
+    "welcome_back": "Welcome back",
+    "join": "Join Bezzery",
+    "sign_in": "Sign in",
+    "create_account": "Create account",
+    "no_account": "Don't have an account?",
+    "has_account": "Already have an account?",
+    "create_now": "Create now",
+    "sign_in_link": "Sign in",
+    "email_sent_title": "Confirm your email",
+    "email_sent_body": "We sent a confirmation link to",
+    "go_to_login": "Go to login",
+    "tagline": "Be who you are",
+    "terms": "By continuing you agree to Bezzery's Terms and Privacy Policy",
+    "invalid_credentials": "Invalid credentials",
+    "username_hint": "3-20 chars. Lowercase, numbers, dot, _ or - only"
+  },
+  "setup": {
+    "title": "Set up your profile",
+    "subtitle": "Almost there — complete your profile",
+    "display_name": "Display name",
+    "choose_display": "Choose how you'll appear on Bezzery.",
+    "enter_bezzery": "Enter Bezzery"
+  },
+  "feed": {
+    "title": "Your Feed",
+    "subtitle": "What's buzzing right now",
+    "latest": "Latest buzzes",
+    "no_posts": "No buzzes yet",
+    "no_posts_sub": "Be the first to buzz something into existence.",
+    "error": "Failed to load feed. Please refresh.",
+    "retry": "Retry"
+  },
+  "post": {
+    "placeholder": "What's buzzing? Share your thoughts...",
+    "submit": "Buzz it",
+    "like": "Like",
+    "comment": "Comment",
+    "comments": "Comments",
+    "no_comments": "No comments yet. Be the first!",
+    "add_comment": "Write a comment...",
+    "post_comment": "Post comment",
+    "chars_left": "characters left"
+  },
+  "profile": {
+    "followers": "Followers",
+    "following": "Following",
+    "posts": "Posts",
+    "follow": "Follow",
+    "unfollow": "Unfollow",
+    "edit_profile": "Edit profile",
+    "no_posts": "No buzzes yet"
+  },
+  "settings": {
+    "title": "Settings",
+    "save": "Save changes",
+    "saving": "Saving...",
+    "saved": "Profile updated!",
+    "display_name": "Display name",
+    "bio": "Bio",
+    "bio_placeholder": "Tell people about yourself...",
+    "avatar": "Profile picture",
+    "banner": "Cover photo",
+    "upload_avatar": "Upload profile picture",
+    "upload_banner": "Upload cover photo",
+    "uploading": "Uploading...",
+    "tags": "Interests",
+    "add_tag": "Add interest",
+    "country": "Country",
+    "select_country": "Select your country",
+    "avatar_hint": "JPG, PNG or GIF. Max 2MB.",
+    "banner_hint": "Recommended: 1500x500px. Max 5MB."
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "close": "Close",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "back": "Back",
+    "required": "required",
+    "optional": "optional"
+  }
+}
