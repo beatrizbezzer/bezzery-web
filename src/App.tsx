@@ -1,4 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { useState, useCallback } from 'react'
+import { SplashScreen } from './components/SplashScreen'
 import { LoginPage } from './pages/LoginPage'
 import { RegisterPage } from './pages/RegisterPage'
 import { SetupProfilePage } from './pages/SetupProfilePage'
@@ -10,7 +12,15 @@ import { MessagesPage } from './pages/MessagesPage'
 import { ProtectedRoute } from './components/ProtectedRoute'
 
 function App() {
+  const [showSplash, setShowSplash] = useState(() => !sessionStorage.getItem('bz_splash_done'))
+  const handleSplashDone = useCallback(() => {
+    sessionStorage.setItem('bz_splash_done', '1')
+    setShowSplash(false)
+  }, [])
+
   return (
+    <>
+    {showSplash && <SplashScreen onDone={handleSplashDone} />}
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<LoginPage />} />
@@ -60,6 +70,7 @@ function App() {
         <Route path="*" element={<Navigate to="/feed" replace />} />
       </Routes>
     </BrowserRouter>
+    </>
   )
 }
 
