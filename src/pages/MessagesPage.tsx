@@ -3,7 +3,6 @@ import { useSearchParams } from 'react-router-dom'
 import { Navbar } from '../components/Navbar'
 import { Avatar } from '../components/ui/Avatar'
 import { useAuthStore } from '../store/authStore'
-import { supabase } from '../lib/supabase'
 import {
   getConversations,
   openConversation,
@@ -12,8 +11,6 @@ import {
   type Conversation,
   type Message,
 } from '../api/messages'
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3333'
 
 function formatTime(dateStr: string): string {
   const date = new Date(dateStr)
@@ -40,9 +37,11 @@ export const MessagesPage: React.FC = () => {
   const [loadingConvs, setLoadingConvs] = useState(true)
   const [loadingMsgs, setLoadingMsgs] = useState(false)
   const bottomRef = useRef<HTMLDivElement>(null)
-  const esRef = useRef<EventSource | null>(null)
+  const activeConvIdRef = useRef<string | null>(null)
 
   const activeConv = conversations.find((c) => c.id === activeConvId) ?? null
+
+  useEffect(() => { activeConvIdRef.current = activeConvId }, [activeConvId])
 
   // Load conversations list
   const loadConversations = useCallback(async () => {
@@ -91,48 +90,37 @@ export const MessagesPage: React.FC = () => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages])
 
-  // SSE for real-time messages
+  // Real-time messages via window event dispatched by useUnreadMessages
   useEffect(() => {
-    let es: EventSource | null = null
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (!session?.access_token) return
-      es = new EventSource(`${API_URL}/notifications/stream?token=${session.access_token}`)
-      esRef.current = es
-      es.onmessage = (e) => {
-        try {
-          const data = JSON.parse(e.data)
-          if (data.type === 'message') {
-            const incomingMsg: Message = data.message
-            // If the message belongs to the active conversation, append it
-            if (data.conversationId === activeConvId) {
-              setMessages((prev) => {
-                if (prev.find((m) => m.id === incomingMsg.id)) return prev
-                return [...prev, incomingMsg]
-              })
-            }
-            // Update last message in conversations list
-            setConversations((prev) =>
-              prev.map((c) =>
-                c.id === data.conversationId
-                  ? {
-                      ...c,
-                      lastMessage: {
-                        content: incomingMsg.content,
-                        senderId: incomingMsg.senderId,
-                        createdAt: incomingMsg.createdAt,
-                        read: data.conversationId === activeConvId,
-                      },
-                    }
-                  : c
-              )
-            )
-          }
-        } catch { /* ignore */ }
+    const handler = (e: Event) => {
+      const data = (e as CustomEvent).detail
+      const incomingMsg: Message = data.message
+      const currentConvId = activeConvIdRef.current
+      if (data.conversationId === currentConvId) {
+        setMessages((prev) => {
+          if (prev.find((m) => m.id === incomingMsg.id)) return prev
+          return [...prev, incomingMsg]
+        })
       }
-      es.onerror = () => { es?.close(); esRef.current = null }
-    })
-    return () => { es?.close(); esRef.current = null }
-  }, [activeConvId])
+      setConversations((prev) =>
+        prev.map((c) =>
+          c.id === data.conversationId
+            ? {
+                ...c,
+                lastMessage: {
+                  content: incomingMsg.content,
+                  senderId: incomingMsg.senderId,
+                  createdAt: incomingMsg.createdAt,
+                  read: data.conversationId === currentConvId,
+                },
+              }
+            : c
+        )
+      )
+    }
+    window.addEventListener('bz:message', handler)
+    return () => window.removeEventListener('bz:message', handler)
+  }, [])
 
   const handleSend = async () => {
     if (!activeConvId || !inputText.trim() || sending) return

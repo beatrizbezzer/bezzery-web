@@ -33,6 +33,7 @@ export function useUnreadMessages() {
         try {
           const data = JSON.parse(e.data)
           if (data.type === 'message') {
+            window.dispatchEvent(new CustomEvent('bz:message', { detail: data }))
             setUnreadMessages((c) => c + 1)
           }
         } catch { /* ignore */ }
