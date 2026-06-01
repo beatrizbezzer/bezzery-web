@@ -10,6 +10,8 @@ import { updateProfile } from '../api/users'
 import { uploadImage } from '../lib/uploadImage'
 import { COUNTRIES, getLanguageForCountry } from '../lib/countryLanguage'
 import { EFFECTS } from '../components/ProfileEffect'
+import { ProfileBgModal } from '../components/ProfileBgModal'
+import { PROFILE_BACKGROUNDS } from '../lib/profileBackgrounds'
 import i18n from '../lib/i18n'
 
 export const SettingsPage: React.FC = () => {
@@ -21,12 +23,13 @@ export const SettingsPage: React.FC = () => {
     bio: user?.bio ?? '',
     avatarUrl: user?.avatarUrl ?? '',
     bannerUrl: user?.bannerUrl ?? '',
-    bgColor: user?.bgColor ?? '',
+    bgImage: user?.bgImage ?? '',
     profileEffect: user?.profileEffect ?? '',
     tagInput: '',
     tags: user?.tags ?? [],
     country: user?.country ?? '',
   })
+  const [bgModalOpen, setBgModalOpen] = useState(false)
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState('')
@@ -127,7 +130,7 @@ export const SettingsPage: React.FC = () => {
         bio: form.bio.trim() || undefined,
         avatarUrl: form.avatarUrl.trim() || undefined,
         bannerUrl: form.bannerUrl.trim() || undefined,
-        bgColor: form.bgColor || null,
+        bgImage: form.bgImage || null,
         profileEffect: form.profileEffect || null,
         tags: form.tags,
         country: form.country || undefined,
@@ -339,66 +342,48 @@ export const SettingsPage: React.FC = () => {
             </div>
           </div>
 
-          {/* Background color */}
+          {/* Background image */}
           <div className="bg-bz-card border border-bz-surface rounded-xl p-5 space-y-4">
             <div className="flex items-center justify-between">
-              <h2 className="font-syne font-bold text-base text-bz-white">Cor de fundo do perfil</h2>
-              {form.bgColor && (
+              <h2 className="font-syne font-bold text-base text-bz-white">Imagem de fundo do perfil</h2>
+              {form.bgImage && (
                 <button
                   type="button"
-                  onClick={() => { setForm((p) => ({ ...p, bgColor: '' })); setSuccess(false) }}
+                  onClick={() => { setForm((p) => ({ ...p, bgImage: '' })); setSuccess(false) }}
                   className="text-xs font-mono text-bz-white/40 hover:text-bz-pink transition-colors cursor-pointer"
                 >
-                  Remover cor
+                  Remover imagem
                 </button>
               )}
             </div>
 
-            {/* Preset swatches */}
-            <div className="flex flex-wrap gap-2">
-              {[
-                '#0f0f1a', '#1a0a2e', '#0a1a2e', '#0a2e1a',
-                '#2e0a1a', '#1a1a0a', '#6d28d9', '#0ea5e9',
-                '#10b981', '#f59e0b', '#ef4444', '#ec4899',
-              ].map((color) => (
-                <button
-                  key={color}
-                  type="button"
-                  onClick={() => { setForm((p) => ({ ...p, bgColor: color })); setSuccess(false) }}
-                  className="w-8 h-8 rounded-lg border-2 transition-all cursor-pointer hover:scale-110"
-                  style={{
-                    backgroundColor: color,
-                    borderColor: form.bgColor === color ? '#00f5c4' : 'transparent',
-                    boxShadow: form.bgColor === color ? '0 0 0 1px #00f5c4' : 'none',
-                  }}
-                />
-              ))}
-
-              {/* Custom color picker */}
-              <label className="relative w-8 h-8 rounded-lg border-2 border-dashed border-bz-surface hover:border-bz-electric/50 transition-colors cursor-pointer flex items-center justify-center overflow-hidden hover:scale-110"
-                title="Cor personalizada"
-              >
-                <svg className="w-4 h-4 text-bz-white/40 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
-                </svg>
-                <input
-                  type="color"
-                  value={form.bgColor || '#080810'}
-                  onChange={(e) => { setForm((p) => ({ ...p, bgColor: e.target.value })); setSuccess(false) }}
-                  className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
-                />
-              </label>
-            </div>
-
-            {/* Preview */}
-            <div
-              className="w-full h-16 rounded-lg transition-colors duration-300 flex items-center justify-center"
-              style={{ backgroundColor: form.bgColor || '#080810' }}
+            {/* Preview + open modal button */}
+            <button
+              type="button"
+              onClick={() => setBgModalOpen(true)}
+              className="w-full relative rounded-xl overflow-hidden border border-bz-surface hover:border-bz-electric/40 transition-all cursor-pointer group"
+              style={{ aspectRatio: '16/5' }}
             >
-              <span className="text-xs font-mono text-white/50">
-                {form.bgColor ? form.bgColor : 'padrão (sem cor)'}
-              </span>
-            </div>
+              {form.bgImage ? (
+                <>
+                  <img
+                    src={PROFILE_BACKGROUNDS.find((b) => b.id === form.bgImage)?.url}
+                    alt="Fundo selecionado"
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    <span className="text-sm font-semibold text-white">Trocar imagem</span>
+                  </div>
+                </>
+              ) : (
+                <div className="w-full h-full bg-bz-surface flex flex-col items-center justify-center gap-2">
+                  <svg className="w-6 h-6 text-bz-white/30" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                  <span className="text-xs font-mono text-bz-white/30">Clique para escolher uma imagem</span>
+                </div>
+              )}
+            </button>
           </div>
 
           {/* Profile effect */}
@@ -494,6 +479,14 @@ export const SettingsPage: React.FC = () => {
           </div>
         </form>
       </main>
+
+      {bgModalOpen && (
+        <ProfileBgModal
+          current={form.bgImage}
+          onSelect={(id) => { setForm((p) => ({ ...p, bgImage: id ?? '' })); setSuccess(false) }}
+          onClose={() => setBgModalOpen(false)}
+        />
+      )}
     </div>
   )
 }
