@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { FollowListModal } from './FollowListModal'
 import { useTranslation } from 'react-i18next'
 import { Avatar } from './ui/Avatar'
 import { Tag, autoVariant } from './ui/Tag'
@@ -19,8 +20,10 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
 }) => {
   const { t } = useTranslation()
   const navigate = useNavigate()
+  const [followModal, setFollowModal] = useState<'followers' | 'following' | null>(null)
 
   return (
+    <>
     <div className="bg-bz-card border border-bz-surface rounded-xl overflow-hidden">
       {/* Banner */}
       <div className="relative h-44 sm:h-56">
@@ -110,20 +113,35 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
             </span>
             <span className="text-xs font-mono text-bz-white/40 uppercase tracking-wider">{t('profile.posts')}</span>
           </div>
-          <div className="text-center">
-            <span className="block font-syne font-bold text-xl text-bz-white">
+          <button
+            className="text-center cursor-pointer group"
+            onClick={() => setFollowModal('followers')}
+          >
+            <span className="block font-syne font-bold text-xl text-bz-white group-hover:text-bz-electric transition-colors">
               {user.followersCount ?? 0}
             </span>
-            <span className="text-xs font-mono text-bz-white/40 uppercase tracking-wider">{t('profile.followers')}</span>
-          </div>
-          <div className="text-center">
-            <span className="block font-syne font-bold text-xl text-bz-white">
+            <span className="text-xs font-mono text-bz-white/40 uppercase tracking-wider group-hover:text-bz-electric/60 transition-colors">{t('profile.followers')}</span>
+          </button>
+          <button
+            className="text-center cursor-pointer group"
+            onClick={() => setFollowModal('following')}
+          >
+            <span className="block font-syne font-bold text-xl text-bz-white group-hover:text-bz-electric transition-colors">
               {user.followingCount ?? 0}
             </span>
-            <span className="text-xs font-mono text-bz-white/40 uppercase tracking-wider">{t('profile.following')}</span>
-          </div>
+            <span className="text-xs font-mono text-bz-white/40 uppercase tracking-wider group-hover:text-bz-electric/60 transition-colors">{t('profile.following')}</span>
+          </button>
         </div>
       </div>
     </div>
+
+      {followModal && (
+        <FollowListModal
+          username={user.username}
+          mode={followModal}
+          onClose={() => setFollowModal(null)}
+        />
+      )}
+    </>
   )
 }

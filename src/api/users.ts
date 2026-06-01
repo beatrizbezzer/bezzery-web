@@ -25,6 +25,24 @@ export const getUserProfile = async (username: string): Promise<User> => {
   return data
 }
 
+export interface FollowUser {
+  id: string
+  username: string
+  name: string
+  avatarUrl?: string
+  bio?: string
+}
+
+export const getFollowers = async (username: string): Promise<FollowUser[]> => {
+  const { data } = await client.get<{ followers: FollowUser[] }>(`/users/${username}/followers`)
+  return data.followers
+}
+
+export const getFollowing = async (username: string): Promise<FollowUser[]> => {
+  const { data } = await client.get<{ following: FollowUser[] }>(`/users/${username}/following`)
+  return data.following
+}
+
 export const followUser = async (username: string): Promise<void> => {
   await client.post(`/users/${username}/follow`)
 }
