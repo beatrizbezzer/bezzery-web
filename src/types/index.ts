@@ -6,6 +6,7 @@ export interface User {
   bio?: string
   avatarUrl?: string
   bannerUrl?: string
+  bgColor?: string | null
   tags?: string[]
   country?: string
   followersCount: number

@@ -20,6 +20,7 @@ export const SettingsPage: React.FC = () => {
     bio: user?.bio ?? '',
     avatarUrl: user?.avatarUrl ?? '',
     bannerUrl: user?.bannerUrl ?? '',
+    bgColor: user?.bgColor ?? '',
     tagInput: '',
     tags: user?.tags ?? [],
     country: user?.country ?? '',
@@ -124,6 +125,7 @@ export const SettingsPage: React.FC = () => {
         bio: form.bio.trim() || undefined,
         avatarUrl: form.avatarUrl.trim() || undefined,
         bannerUrl: form.bannerUrl.trim() || undefined,
+        bgColor: form.bgColor || null,
         tags: form.tags,
         country: form.country || undefined,
       })
@@ -331,6 +333,68 @@ export const SettingsPage: React.FC = () => {
                   </option>
                 ))}
               </select>
+            </div>
+          </div>
+
+          {/* Background color */}
+          <div className="bg-bz-card border border-bz-surface rounded-xl p-5 space-y-4">
+            <div className="flex items-center justify-between">
+              <h2 className="font-syne font-bold text-base text-bz-white">Cor de fundo do perfil</h2>
+              {form.bgColor && (
+                <button
+                  type="button"
+                  onClick={() => { setForm((p) => ({ ...p, bgColor: '' })); setSuccess(false) }}
+                  className="text-xs font-mono text-bz-white/40 hover:text-bz-pink transition-colors cursor-pointer"
+                >
+                  Remover cor
+                </button>
+              )}
+            </div>
+
+            {/* Preset swatches */}
+            <div className="flex flex-wrap gap-2">
+              {[
+                '#0f0f1a', '#1a0a2e', '#0a1a2e', '#0a2e1a',
+                '#2e0a1a', '#1a1a0a', '#6d28d9', '#0ea5e9',
+                '#10b981', '#f59e0b', '#ef4444', '#ec4899',
+              ].map((color) => (
+                <button
+                  key={color}
+                  type="button"
+                  onClick={() => { setForm((p) => ({ ...p, bgColor: color })); setSuccess(false) }}
+                  className="w-8 h-8 rounded-lg border-2 transition-all cursor-pointer hover:scale-110"
+                  style={{
+                    backgroundColor: color,
+                    borderColor: form.bgColor === color ? '#00f5c4' : 'transparent',
+                    boxShadow: form.bgColor === color ? '0 0 0 1px #00f5c4' : 'none',
+                  }}
+                />
+              ))}
+
+              {/* Custom color picker */}
+              <label className="relative w-8 h-8 rounded-lg border-2 border-dashed border-bz-surface hover:border-bz-electric/50 transition-colors cursor-pointer flex items-center justify-center overflow-hidden hover:scale-110"
+                title="Cor personalizada"
+              >
+                <svg className="w-4 h-4 text-bz-white/40 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+                </svg>
+                <input
+                  type="color"
+                  value={form.bgColor || '#080810'}
+                  onChange={(e) => { setForm((p) => ({ ...p, bgColor: e.target.value })); setSuccess(false) }}
+                  className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
+                />
+              </label>
+            </div>
+
+            {/* Preview */}
+            <div
+              className="w-full h-16 rounded-lg transition-colors duration-300 flex items-center justify-center"
+              style={{ backgroundColor: form.bgColor || '#080810' }}
+            >
+              <span className="text-xs font-mono text-white/50">
+                {form.bgColor ? form.bgColor : 'padrão (sem cor)'}
+              </span>
             </div>
           </div>
 

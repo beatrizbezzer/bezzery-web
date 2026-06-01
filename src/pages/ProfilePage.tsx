@@ -60,13 +60,15 @@ export const ProfilePage: React.FC = () => {
 
   const isOwnProfile = currentUser?.username === username
 
+  const bgColor = profile?.bgColor
+
   return (
-    <div className="min-h-screen bg-bz-black">
+    <div className="min-h-screen bg-bz-black" style={bgColor ? { background: `linear-gradient(180deg, ${bgColor}cc 0%, #080810 380px)` } : undefined}>
       <Navbar />
 
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-24 right-8 w-72 h-72 bg-bz-pink/5 rounded-full blur-3xl" />
-        <div className="absolute top-96 left-8 w-56 h-56 bg-bz-violet/6 rounded-full blur-3xl" />
+        {!bgColor && <div className="absolute top-24 right-8 w-72 h-72 bg-bz-pink/5 rounded-full blur-3xl" />}
+        {!bgColor && <div className="absolute top-96 left-8 w-56 h-56 bg-bz-violet/6 rounded-full blur-3xl" />}
       </div>
 
       <main className="max-w-2xl mx-auto px-4 py-8 relative">
