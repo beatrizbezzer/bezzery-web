@@ -31,6 +31,7 @@ export interface FollowUser {
   name: string
   avatarUrl?: string
   bio?: string
+  isFollowing?: boolean
 }
 
 export const getFollowers = async (username: string): Promise<FollowUser[]> => {

@@ -77,7 +77,7 @@ export const FollowListModal: React.FC<FollowListModalProps> = ({ username, mode
                   </Link>
                 </div>
                 {currentUser && currentUser.username !== u.username && (
-                  <FollowButton username={u.username} isFollowing={false} size="sm" />
+                  <FollowButton username={u.username} isFollowing={u.isFollowing ?? false} size="sm" />
                 )}
               </div>
             ))
