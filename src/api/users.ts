@@ -39,6 +39,7 @@ export interface UpdateProfilePayload {
   avatarUrl?: string
   bannerUrl?: string
   bgColor?: string | null
+  profileEffect?: string | null
   tags?: string[]
   country?: string
 }

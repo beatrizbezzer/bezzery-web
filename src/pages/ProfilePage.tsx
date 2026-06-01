@@ -8,6 +8,7 @@ import { getUserProfile } from '../api/users'
 import { getUserPosts } from '../api/posts'
 import { useAuthStore } from '../store/authStore'
 import type { User, Post } from '../types'
+import { ProfileEffect } from '../components/ProfileEffect'
 
 export const ProfilePage: React.FC = () => {
   const { t } = useTranslation()
@@ -69,6 +70,7 @@ export const ProfilePage: React.FC = () => {
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
         {!bgColor && <div className="absolute top-24 right-8 w-72 h-72 bg-bz-pink/5 rounded-full blur-3xl" />}
         {!bgColor && <div className="absolute top-96 left-8 w-56 h-56 bg-bz-violet/6 rounded-full blur-3xl" />}
+        <ProfileEffect effect={profile?.profileEffect} />
       </div>
 
       <main className="max-w-2xl mx-auto px-4 py-8 relative">

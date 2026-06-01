@@ -9,6 +9,7 @@ import { useAuthStore } from '../store/authStore'
 import { updateProfile } from '../api/users'
 import { uploadImage } from '../lib/uploadImage'
 import { COUNTRIES, getLanguageForCountry } from '../lib/countryLanguage'
+import { EFFECTS } from '../components/ProfileEffect'
 import i18n from '../lib/i18n'
 
 export const SettingsPage: React.FC = () => {
@@ -21,6 +22,7 @@ export const SettingsPage: React.FC = () => {
     avatarUrl: user?.avatarUrl ?? '',
     bannerUrl: user?.bannerUrl ?? '',
     bgColor: user?.bgColor ?? '',
+    profileEffect: user?.profileEffect ?? '',
     tagInput: '',
     tags: user?.tags ?? [],
     country: user?.country ?? '',
@@ -126,6 +128,7 @@ export const SettingsPage: React.FC = () => {
         avatarUrl: form.avatarUrl.trim() || undefined,
         bannerUrl: form.bannerUrl.trim() || undefined,
         bgColor: form.bgColor || null,
+        profileEffect: form.profileEffect || null,
         tags: form.tags,
         country: form.country || undefined,
       })
@@ -397,6 +400,41 @@ export const SettingsPage: React.FC = () => {
               </span>
             </div>
           </div>
+
+          {/* Profile effect */}
+          {EFFECTS.length > 0 && (
+            <div className="bg-bz-card border border-bz-surface rounded-xl p-5 space-y-4">
+              <div className="flex items-center justify-between">
+                <h2 className="font-syne font-bold text-base text-bz-white">Efeito do perfil</h2>
+                {form.profileEffect && (
+                  <button
+                    type="button"
+                    onClick={() => { setForm((p) => ({ ...p, profileEffect: '' })); setSuccess(false) }}
+                    className="text-xs font-mono text-bz-white/40 hover:text-bz-pink transition-colors cursor-pointer"
+                  >
+                    Remover efeito
+                  </button>
+                )}
+              </div>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                {EFFECTS.map((e) => (
+                  <button
+                    key={e.id}
+                    type="button"
+                    onClick={() => { setForm((p) => ({ ...p, profileEffect: p.profileEffect === e.id ? '' : e.id })); setSuccess(false) }}
+                    className={[
+                      'relative h-20 rounded-xl border-2 overflow-hidden transition-all cursor-pointer text-sm font-semibold',
+                      form.profileEffect === e.id
+                        ? 'border-bz-electric text-bz-electric'
+                        : 'border-bz-surface text-bz-white/50 hover:border-bz-surface/80',
+                    ].join(' ')}
+                  >
+                    <span className="relative z-10">{e.label}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* Tags */}
           <div className="bg-bz-card border border-bz-surface rounded-xl p-5 space-y-4">
