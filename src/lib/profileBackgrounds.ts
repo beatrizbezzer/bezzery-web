@@ -6,5 +6,5 @@ export interface ProfileBackground {
 
 // Add new images here as they're added to public/profile-backgrounds/
 export const PROFILE_BACKGROUNDS: ProfileBackground[] = [
-  { id: 'emo-1', label: 'Emo 1', url: '/profile-backgrounds/emo-1.png' },
+  { id: 'emo-1', label: 'Violet Decay', url: '/profile-backgrounds/emo-1.png' },
 ]
