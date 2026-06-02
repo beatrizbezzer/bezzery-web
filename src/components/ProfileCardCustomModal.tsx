@@ -27,16 +27,27 @@ const MiniCard: React.FC<{ children?: React.ReactNode }> = ({ children }) => (
 
 const BorderPreview: React.FC<{ id: string }> = ({ id }) => {
   if (id === 'emo-frame') {
+    const starPath = "M8,1 L9.8,6.2 L15.5,6.3 L11,9.8 L12.5,15 L8,11.8 L3.5,15 L5,9.8 L0.5,6.3 L6.2,6.2 Z"
     return (
       <div style={{
         borderRadius: '12px',
-        boxShadow: '0 0 0 1.5px #8b5cf6, 0 0 0 3px rgba(0,0,0,0.95), 0 0 0 4.5px #6d28d9, 0 0 14px rgba(109,40,217,0.6)',
+        boxShadow: '0 0 0 1.5px #4b2952, 0 0 0 3px rgba(0,0,0,0.95), 0 0 0 4.5px #4b2952, 0 0 14px rgba(75,41,82,0.5)',
         position: 'relative',
+        overflow: 'visible',
       }}>
         <MiniCard>
-          <span className="absolute -top-2 -left-2 text-[10px] select-none" style={{ color: '#8b5cf6', lineHeight: 1 }}>✦</span>
-          <span className="absolute -top-1 -right-1 text-[8px] select-none" style={{ color: '#6d28d9' }}>♥</span>
-          <span className="absolute -bottom-1.5 -right-1.5 text-[10px] select-none" style={{ color: '#8b5cf6' }}>♥</span>
+          <svg className="absolute select-none" style={{ top: -8, left: -8, overflow: 'visible' }} width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d={starPath} fill="none" stroke="#4b2952" strokeWidth="1.4" strokeLinejoin="round"/>
+          </svg>
+          <svg className="absolute select-none" style={{ top: -6, right: -6, overflow: 'visible' }} width="13" height="13" viewBox="0 0 16 16" fill="none">
+            <path d={starPath} fill="none" stroke="#4b2952" strokeWidth="1.4" strokeLinejoin="round"/>
+          </svg>
+          <svg className="absolute select-none" style={{ bottom: -7, left: -7, overflow: 'visible' }} width="14" height="14" viewBox="0 0 16 16" fill="none">
+            <path d={starPath} fill="none" stroke="#4b2952" strokeWidth="1.4" strokeLinejoin="round"/>
+          </svg>
+          <svg className="absolute select-none" style={{ bottom: -7, right: -7, overflow: 'visible' }} width="14" height="14" viewBox="0 0 16 16" fill="none">
+            <path d={starPath} fill="none" stroke="#4b2952" strokeWidth="1.4" strokeLinejoin="round"/>
+          </svg>
         </MiniCard>
       </div>
     )
