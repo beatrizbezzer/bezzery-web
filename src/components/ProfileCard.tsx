@@ -5,6 +5,8 @@ import { useTranslation } from 'react-i18next'
 import { Avatar } from './ui/Avatar'
 import { Tag, autoVariant } from './ui/Tag'
 import { FollowButton } from './FollowButton'
+import { CardStickerLayer, CardOverlayLayer } from './CardDecorationLayers'
+import { getBorderShadow } from '../lib/cardDecorations'
 import type { User } from '../types'
 
 interface ProfileCardProps {
@@ -22,9 +24,13 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
   const navigate = useNavigate()
   const [followModal, setFollowModal] = useState<'followers' | 'following' | null>(null)
 
-  return (
-    <>
-    <div className="bg-bz-card border border-bz-surface rounded-xl overflow-hidden">
+  const isGradientBorder = user.cardBorder === 'gradient-vp'
+  const borderShadow = getBorderShadow(user.cardBorder)
+
+  const cardInner = (
+    <div
+      className={`relative bg-bz-card rounded-xl overflow-hidden ${isGradientBorder ? '' : 'border border-bz-surface'}`}
+    >
       {/* Banner */}
       <div className="relative h-44 sm:h-56">
         {user.bannerUrl ? (
@@ -133,7 +139,31 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
           </button>
         </div>
       </div>
+
+      {/* Overlay decoration (inside card so it clips to rounded corners) */}
+      {user.cardOverlay && <CardOverlayLayer id={user.cardOverlay} />}
     </div>
+  )
+
+  return (
+    <>
+      <div className="relative">
+        {/* Border wrapper */}
+        {isGradientBorder ? (
+          <div className="p-[2px] rounded-xl" style={{ background: 'linear-gradient(135deg, #8b5cf6, #ec4899)' }}>
+            {cardInner}
+          </div>
+        ) : borderShadow ? (
+          <div style={{ borderRadius: '12px', boxShadow: borderShadow }}>
+            {cardInner}
+          </div>
+        ) : (
+          cardInner
+        )}
+
+        {/* Sticker decoration (outside card so it can overflow edges) */}
+        {user.cardSticker && <CardStickerLayer id={user.cardSticker} />}
+      </div>
 
       {followModal && (
         <FollowListModal

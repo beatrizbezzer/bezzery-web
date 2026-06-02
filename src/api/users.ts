@@ -59,6 +59,9 @@ export interface UpdateProfilePayload {
   bannerUrl?: string
   bgImage?: string | null
   profileEffect?: string | null
+  cardBorder?: string | null
+  cardSticker?: string | null
+  cardOverlay?: string | null
   tags?: string[]
   country?: string
 }

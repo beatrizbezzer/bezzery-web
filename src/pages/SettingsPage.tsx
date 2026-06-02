@@ -11,7 +11,9 @@ import { uploadImage } from '../lib/uploadImage'
 import { COUNTRIES, getLanguageForCountry } from '../lib/countryLanguage'
 import { EFFECTS } from '../components/ProfileEffect'
 import { ProfileBgModal } from '../components/ProfileBgModal'
+import { ProfileCardCustomModal } from '../components/ProfileCardCustomModal'
 import { PROFILE_BACKGROUNDS } from '../lib/profileBackgrounds'
+import { CARD_BORDERS, CARD_STICKERS, CARD_OVERLAYS } from '../lib/cardDecorations'
 import i18n from '../lib/i18n'
 
 export const SettingsPage: React.FC = () => {
@@ -25,11 +27,15 @@ export const SettingsPage: React.FC = () => {
     bannerUrl: user?.bannerUrl ?? '',
     bgImage: user?.bgImage ?? '',
     profileEffect: user?.profileEffect ?? '',
+    cardBorder: user?.cardBorder ?? '',
+    cardSticker: user?.cardSticker ?? '',
+    cardOverlay: user?.cardOverlay ?? '',
     tagInput: '',
     tags: user?.tags ?? [],
     country: user?.country ?? '',
   })
   const [bgModalOpen, setBgModalOpen] = useState(false)
+  const [cardModalOpen, setCardModalOpen] = useState(false)
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState('')
@@ -132,6 +138,9 @@ export const SettingsPage: React.FC = () => {
         bannerUrl: form.bannerUrl.trim() || undefined,
         bgImage: form.bgImage || null,
         profileEffect: form.profileEffect || null,
+        cardBorder: form.cardBorder || null,
+        cardSticker: form.cardSticker || null,
+        cardOverlay: form.cardOverlay || null,
         tags: form.tags,
         country: form.country || undefined,
       })
@@ -421,6 +430,59 @@ export const SettingsPage: React.FC = () => {
             </div>
           )}
 
+          {/* Card decorations */}
+          {(CARD_BORDERS.length > 0 || CARD_STICKERS.length > 0 || CARD_OVERLAYS.length > 0) && (
+            <div className="bg-bz-card border border-bz-surface rounded-xl p-5 space-y-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h2 className="font-syne font-bold text-base text-bz-white">Decorações do card</h2>
+                  <p className="text-xs font-mono text-bz-white/35 mt-0.5">Bordas, stickers e overlays</p>
+                </div>
+                {(form.cardBorder || form.cardSticker || form.cardOverlay) && (
+                  <button
+                    type="button"
+                    onClick={() => { setForm((p) => ({ ...p, cardBorder: '', cardSticker: '', cardOverlay: '' })); setSuccess(false) }}
+                    className="text-xs font-mono text-bz-white/40 hover:text-bz-pink transition-colors cursor-pointer"
+                  >
+                    Remover tudo
+                  </button>
+                )}
+              </div>
+
+              {/* Current selections summary */}
+              {(form.cardBorder || form.cardSticker || form.cardOverlay) && (
+                <div className="flex flex-wrap gap-2">
+                  {form.cardBorder && (
+                    <span className="px-2 py-1 rounded-md bg-bz-surface text-xs font-mono text-bz-electric/80">
+                      {CARD_BORDERS.find((b) => b.id === form.cardBorder)?.label ?? form.cardBorder}
+                    </span>
+                  )}
+                  {form.cardSticker && (
+                    <span className="px-2 py-1 rounded-md bg-bz-surface text-xs font-mono text-bz-pink/80">
+                      {CARD_STICKERS.find((s) => s.id === form.cardSticker)?.label ?? form.cardSticker}
+                    </span>
+                  )}
+                  {form.cardOverlay && (
+                    <span className="px-2 py-1 rounded-md bg-bz-surface text-xs font-mono text-bz-violet/80">
+                      {CARD_OVERLAYS.find((o) => o.id === form.cardOverlay)?.label ?? form.cardOverlay}
+                    </span>
+                  )}
+                </div>
+              )}
+
+              <button
+                type="button"
+                onClick={() => setCardModalOpen(true)}
+                className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl border border-bz-surface text-bz-white/50 hover:text-bz-white hover:border-bz-electric/40 transition-all cursor-pointer text-sm font-mono group"
+              >
+                <svg className="w-4 h-4 group-hover:text-bz-electric transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
+                </svg>
+                Personalizar card
+              </button>
+            </div>
+          )}
+
           {/* Tags */}
           <div className="bg-bz-card border border-bz-surface rounded-xl p-5 space-y-4">
             <div className="flex items-center justify-between">
@@ -485,6 +547,18 @@ export const SettingsPage: React.FC = () => {
           current={form.bgImage}
           onSelect={(id) => { setForm((p) => ({ ...p, bgImage: id ?? '' })); setSuccess(false) }}
           onClose={() => setBgModalOpen(false)}
+        />
+      )}
+
+      {cardModalOpen && (
+        <ProfileCardCustomModal
+          currentBorder={form.cardBorder || null}
+          currentSticker={form.cardSticker || null}
+          currentOverlay={form.cardOverlay || null}
+          onSelectBorder={(id) => { setForm((p) => ({ ...p, cardBorder: id ?? '' })); setSuccess(false) }}
+          onSelectSticker={(id) => { setForm((p) => ({ ...p, cardSticker: id ?? '' })); setSuccess(false) }}
+          onSelectOverlay={(id) => { setForm((p) => ({ ...p, cardOverlay: id ?? '' })); setSuccess(false) }}
+          onClose={() => setCardModalOpen(false)}
         />
       )}
     </div>
