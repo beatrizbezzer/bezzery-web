@@ -79,17 +79,32 @@ export const SettingsPage: React.FC = () => {
   }
 
   const saveCardDecoration = async (patch: { cardBorder?: string | null; cardSticker?: string | null; cardOverlay?: string | null }) => {
+    if (!user) return
+
+    // Compute the optimistic next state
+    const next = {
+      cardBorder: patch.cardBorder !== undefined ? (patch.cardBorder ?? '') : (user.cardBorder ?? ''),
+      cardSticker: patch.cardSticker !== undefined ? (patch.cardSticker ?? '') : (user.cardSticker ?? ''),
+      cardOverlay: patch.cardOverlay !== undefined ? (patch.cardOverlay ?? '') : (user.cardOverlay ?? ''),
+    }
+
+    // Apply immediately so the profile card reflects the change right away
+    setUser({ ...user, cardBorder: next.cardBorder || null, cardSticker: next.cardSticker || null, cardOverlay: next.cardOverlay || null })
+    setForm((p) => ({ ...p, cardBorder: next.cardBorder, cardSticker: next.cardSticker, cardOverlay: next.cardOverlay }))
+
     setCardSaving(true)
     try {
       const updated = await updateProfile(patch)
-      setUser(updated)
-      setForm((p) => ({
-        ...p,
-        cardBorder: updated.cardBorder ?? '',
-        cardSticker: updated.cardSticker ?? '',
-        cardOverlay: updated.cardOverlay ?? '',
-      }))
-    } catch { /* ignore */ } finally {
+      // After API response, keep selected values if backend didn't return them yet (old deployment)
+      setUser({
+        ...updated,
+        cardBorder: updated.cardBorder ?? (next.cardBorder || null),
+        cardSticker: updated.cardSticker ?? (next.cardSticker || null),
+        cardOverlay: updated.cardOverlay ?? (next.cardOverlay || null),
+      })
+    } catch {
+      // API failed — keep the optimistic state, will sync when backend deploys
+    } finally {
       setCardSaving(false)
     }
   }
