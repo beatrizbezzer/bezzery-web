@@ -11,6 +11,7 @@ interface Props {
   onSelectSticker: (id: string | null) => void
   onSelectOverlay: (id: string | null) => void
   onClose: () => void
+  saving?: boolean
 }
 
 const MiniCard: React.FC<{ children?: React.ReactNode }> = ({ children }) => (
@@ -92,7 +93,7 @@ const TABS: { id: Tab; label: string; items: typeof CARD_BORDERS }[] = [
 
 export const ProfileCardCustomModal: React.FC<Props> = ({
   currentBorder, currentSticker, currentOverlay,
-  onSelectBorder, onSelectSticker, onSelectOverlay, onClose,
+  onSelectBorder, onSelectSticker, onSelectOverlay, onClose, saving = false,
 }) => {
   const [tab, setTab] = useState<Tab>(TABS[0]?.id ?? 'borders')
 
@@ -127,7 +128,10 @@ export const ProfileCardCustomModal: React.FC<Props> = ({
       <div className="bg-bz-card border border-bz-surface rounded-2xl w-full max-w-lg max-h-[80vh] flex flex-col shadow-2xl shadow-black/60 animate-fade-in">
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-bz-surface flex-shrink-0">
-          <h2 className="font-syne font-bold text-lg text-bz-white">Personalizar Card</h2>
+          <div className="flex items-center gap-2">
+            <h2 className="font-syne font-bold text-lg text-bz-white">Personalizar Card</h2>
+            {saving && <span className="text-xs font-mono text-bz-white/40 animate-pulse">Salvando...</span>}
+          </div>
           <button
             onClick={onClose}
             className="w-8 h-8 flex items-center justify-center rounded-lg text-bz-white/40 hover:text-bz-white hover:bg-bz-surface transition-colors cursor-pointer"
@@ -179,9 +183,11 @@ export const ProfileCardCustomModal: React.FC<Props> = ({
               return (
                 <button
                   key={item.id}
-                  onClick={() => handleSelect(tab, item.id)}
+                  onClick={() => !saving && handleSelect(tab, item.id)}
+                  disabled={saving}
                   className={[
-                    'relative rounded-xl border-2 p-3 text-left transition-all cursor-pointer',
+                    'relative rounded-xl border-2 p-3 text-left transition-all',
+                    saving ? 'opacity-60 cursor-wait' : 'cursor-pointer',
                     selected ? 'border-bz-electric' : 'border-bz-surface hover:border-bz-surface/80',
                   ].join(' ')}
                   style={{ overflow: tab === 'stickers' ? 'visible' : 'hidden' }}

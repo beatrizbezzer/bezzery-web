@@ -36,6 +36,7 @@ export const SettingsPage: React.FC = () => {
   })
   const [bgModalOpen, setBgModalOpen] = useState(false)
   const [cardModalOpen, setCardModalOpen] = useState(false)
+  const [cardSaving, setCardSaving] = useState(false)
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState('')
@@ -75,6 +76,22 @@ export const SettingsPage: React.FC = () => {
   const handleRemoveTag = (tag: string) => {
     setForm((prev) => ({ ...prev, tags: prev.tags.filter((t) => t !== tag) }))
     setSuccess(false)
+  }
+
+  const saveCardDecoration = async (patch: { cardBorder?: string | null; cardSticker?: string | null; cardOverlay?: string | null }) => {
+    setCardSaving(true)
+    try {
+      const updated = await updateProfile(patch)
+      setUser(updated)
+      setForm((p) => ({
+        ...p,
+        cardBorder: updated.cardBorder ?? '',
+        cardSticker: updated.cardSticker ?? '',
+        cardOverlay: updated.cardOverlay ?? '',
+      }))
+    } catch { /* ignore */ } finally {
+      setCardSaving(false)
+    }
   }
 
   const handleAvatarChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -441,7 +458,7 @@ export const SettingsPage: React.FC = () => {
                 {(form.cardBorder || form.cardSticker || form.cardOverlay) && (
                   <button
                     type="button"
-                    onClick={() => { setForm((p) => ({ ...p, cardBorder: '', cardSticker: '', cardOverlay: '' })); setSuccess(false) }}
+                    onClick={() => saveCardDecoration({ cardBorder: null, cardSticker: null, cardOverlay: null })}
                     className="text-xs font-mono text-bz-white/40 hover:text-bz-pink transition-colors cursor-pointer"
                   >
                     Remover tudo
@@ -555,10 +572,11 @@ export const SettingsPage: React.FC = () => {
           currentBorder={form.cardBorder || null}
           currentSticker={form.cardSticker || null}
           currentOverlay={form.cardOverlay || null}
-          onSelectBorder={(id) => { setForm((p) => ({ ...p, cardBorder: id ?? '' })); setSuccess(false) }}
-          onSelectSticker={(id) => { setForm((p) => ({ ...p, cardSticker: id ?? '' })); setSuccess(false) }}
-          onSelectOverlay={(id) => { setForm((p) => ({ ...p, cardOverlay: id ?? '' })); setSuccess(false) }}
+          onSelectBorder={(id) => saveCardDecoration({ cardBorder: id })}
+          onSelectSticker={(id) => saveCardDecoration({ cardSticker: id })}
+          onSelectOverlay={(id) => saveCardDecoration({ cardOverlay: id })}
           onClose={() => setCardModalOpen(false)}
+          saving={cardSaving}
         />
       )}
     </div>
