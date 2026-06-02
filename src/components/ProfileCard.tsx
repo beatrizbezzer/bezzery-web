@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { Avatar } from './ui/Avatar'
 import { Tag, autoVariant } from './ui/Tag'
 import { FollowButton } from './FollowButton'
-import { CardStickerLayer, CardOverlayLayer, EmoFrameDecorations, SafetyPinsBorderLayer, ChainDarkBorderLayer } from './CardDecorationLayers'
+import { CardStickerLayer, CardOverlayLayer, EmoFrameDecorations } from './CardDecorationLayers'
 import { getBorderShadow } from '../lib/cardDecorations'
 import type { User } from '../types'
 
@@ -197,8 +197,6 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
         {/* Sticker decoration (outside card so it can overflow edges) */}
         {user.cardSticker && <CardStickerLayer id={user.cardSticker} />}
         {isEmoFrame && <EmoFrameDecorations />}
-        {user.cardBorder === 'safety-pins' && <SafetyPinsBorderLayer />}
-        {user.cardBorder === 'chain-dark' && <ChainDarkBorderLayer />}
       </div>
 
       {followModal && (
