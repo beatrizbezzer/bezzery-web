@@ -155,16 +155,7 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
       <div className="relative">
         {/* Border wrapper */}
         {isEmoFrame ? (
-          <div style={{
-            borderRadius: '24px',
-            boxShadow: [
-              '0 0 0 2px #8b5cf6',
-              '0 0 0 4px rgba(0,0,0,0.95)',
-              '0 0 0 6px #6d28d9',
-              '0 0 28px rgba(109,40,217,0.55)',
-              '0 0 70px rgba(109,40,217,0.18)',
-            ].join(', '),
-          }}>
+          <div style={{ borderRadius: '24px' }}>
             {cardInner}
           </div>
         ) : isGradientBorder ? (
