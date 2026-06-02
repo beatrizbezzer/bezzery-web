@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { Avatar } from './ui/Avatar'
 import { Tag, autoVariant } from './ui/Tag'
 import { FollowButton } from './FollowButton'
-import { CardStickerLayer, CardOverlayLayer, EmoFrameDecorations } from './CardDecorationLayers'
+import { CardStickerLayer, CardOverlayLayer } from './CardDecorationLayers'
 import { getBorderShadow } from '../lib/cardDecorations'
 import type { User } from '../types'
 
@@ -32,10 +32,14 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
   const cardInner = (
     <div
       className={`relative bg-bz-card overflow-hidden ${
-        isEmoFrame ? 'rounded-[22px]' :
-        isGradientBorder || isCheckerPunk ? 'rounded-xl' :
+        isGradientBorder || isCheckerPunk || isEmoFrame ? 'rounded-xl' :
         'rounded-xl border border-bz-surface'
       }`}
+      style={isEmoFrame ? {
+        borderStyle: 'solid',
+        borderWidth: '44px',
+        borderImage: 'url(/card-borders/purple-stars.png) 120 / 44px stretch',
+      } : undefined}
     >
       {/* Banner */}
       <div className="relative h-44 sm:h-56">
@@ -155,20 +159,8 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
     <>
       <div className="relative">
         {/* Border wrapper */}
-        {isEmoFrame ? (
-          <div style={{
-            borderRadius: '24px',
-            boxShadow: [
-              '0 0 0 2px #4b2952',
-              '0 0 0 4px rgba(0,0,0,0.95)',
-              '0 0 0 6px #4b2952',
-              '0 0 28px rgba(75,41,82,0.55)',
-              '0 0 70px rgba(75,41,82,0.18)',
-            ].join(', '),
-          }}>
-            {cardInner}
-          </div>
-        ) : isGradientBorder ? (
+        {isEmoFrame ? cardInner
+        : isGradientBorder ? (
           <div className="p-[2px] rounded-xl" style={{ background: 'linear-gradient(135deg, #8b5cf6, #ec4899)' }}>
             {cardInner}
           </div>
@@ -196,7 +188,6 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
 
         {/* Sticker decoration (outside card so it can overflow edges) */}
         {user.cardSticker && <CardStickerLayer id={user.cardSticker} />}
-        {isEmoFrame && <EmoFrameDecorations />}
       </div>
 
       {followModal && (
