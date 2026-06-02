@@ -9,125 +9,197 @@ export function getBorderShadow(borderId: string | null | undefined): string | n
   return borderId ? (shadows[borderId] ?? null) : null
 }
 
-/* ─── Emo Frame corner decorations ─────────────────────────────────────── */
+/* ─── Emo Frame ─────────────────────────────────────────────────────────── */
 
 export const EmoFrameDecorations: React.FC = () => (
-  <>
-    {/* ── Top-left: scribbled neon star + hand-drawn marks ── */}
-    <div className="absolute top-0 left-0 pointer-events-none select-none" style={{ transform: 'translate(-10px, -10px)', zIndex: 20 }}>
-      <svg width="96" height="96" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <div className="absolute inset-0 pointer-events-none select-none" style={{ zIndex: 20, overflow: 'visible', borderRadius: 'inherit' }}>
+
+    {/* ── TOP torn fabric strip ── */}
+    <div className="absolute top-0 left-0 right-0" style={{ height: 52 }}>
+      <svg width="100%" height="52" viewBox="0 0 600 52" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
         <defs>
-          <filter id="glow-tl" x="-60%" y="-60%" width="220%" height="220%">
-            <feGaussianBlur stdDeviation="3" result="blur"/>
-            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          <filter id="ef-rip-top" x="-4%" y="-20%" width="108%" height="160%">
+            <feTurbulence type="turbulence" baseFrequency="0.065 0.035" numOctaves="4" seed="9" result="noise"/>
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="16" xChannelSelector="R" yChannelSelector="G"/>
           </filter>
+          <linearGradient id="ef-grad-top" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%"   stopColor="#2e0654" stopOpacity="1"/>
+            <stop offset="50%"  stopColor="#5b21b6" stopOpacity="0.95"/>
+            <stop offset="78%"  stopColor="#7c3aed" stopOpacity="0.45"/>
+            <stop offset="100%" stopColor="#8b5cf6" stopOpacity="0"/>
+          </linearGradient>
         </defs>
-        {/* Outer star trace (scribble) */}
-        <path d="M28,10 L32,21.5 L45,22 L36,29.5 L39,41 L28,34 L17,41 L20,29.5 L11,22 L24,21.5 Z"
-              stroke="#6d28d9" strokeWidth="1" fill="none" strokeLinejoin="round" opacity="0.5"/>
-        {/* Main star */}
-        <path d="M28,8 L32,20 L45,20.5 L35.5,28 L38.5,40 L28,33 L17.5,40 L20.5,28 L11,20.5 L24,20 Z"
-              stroke="#8b5cf6" strokeWidth="1.8" fill="rgba(139,92,246,0.08)"
-              strokeLinejoin="round" filter="url(#glow-tl)"/>
-        {/* Hand-drawn tick marks near star */}
-        <path d="M50,12 L56,10 M52,18 L60,16" stroke="#6d28d9" strokeWidth="1" strokeLinecap="round" opacity="0.6"/>
-        <path d="M48,8 L54,11" stroke="#8b5cf6" strokeWidth="0.8" strokeLinecap="round" opacity="0.4"/>
-        {/* × symbols */}
-        <text x="58" y="13" fill="#8b5cf6" fontSize="9" opacity="0.7" fontFamily="serif">×</text>
-        <text x="12" y="56" fill="#6d28d9" fontSize="7" opacity="0.5" fontFamily="serif">×</text>
-        {/* Subtle scratches along left edge */}
-        <path d="M14,62 L19,66 M13,72 L18,75 M14,80 L20,83" stroke="#6d28d9" strokeWidth="0.7" strokeLinecap="round" opacity="0.35"/>
+        <rect x="0" y="0" width="600" height="52" fill="url(#ef-grad-top)" filter="url(#ef-rip-top)"/>
+        {/* Fray threads */}
+        <path d="M80,38 L77,50 M160,36 L163,47 M260,37 L258,49 M360,36 L363,48 M460,37 L457,49 M520,38 L523,50"
+              stroke="#a78bfa" strokeWidth="0.7" strokeLinecap="round" opacity="0.5"/>
       </svg>
     </div>
 
-    {/* ── Top-right: safety pin + chain + heart outline ── */}
-    <div className="absolute top-0 right-0 pointer-events-none select-none" style={{ transform: 'translate(10px, -10px)', zIndex: 20 }}>
-      <svg width="88" height="138" viewBox="0 0 88 138" fill="none" xmlns="http://www.w3.org/2000/svg">
+    {/* ── BOTTOM torn fabric strip ── */}
+    <div className="absolute bottom-0 left-0 right-0" style={{ height: 52 }}>
+      <svg width="100%" height="52" viewBox="0 0 600 52" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
         <defs>
-          <filter id="glow-tr" x="-80%" y="-60%" width="260%" height="220%">
+          <filter id="ef-rip-bot" x="-4%" y="-40%" width="108%" height="160%">
+            <feTurbulence type="turbulence" baseFrequency="0.065 0.035" numOctaves="4" seed="3" result="noise"/>
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="16" xChannelSelector="R" yChannelSelector="G"/>
+          </filter>
+          <linearGradient id="ef-grad-bot" x1="0" y1="1" x2="0" y2="0">
+            <stop offset="0%"   stopColor="#2e0654" stopOpacity="1"/>
+            <stop offset="50%"  stopColor="#5b21b6" stopOpacity="0.95"/>
+            <stop offset="78%"  stopColor="#7c3aed" stopOpacity="0.45"/>
+            <stop offset="100%" stopColor="#8b5cf6" stopOpacity="0"/>
+          </linearGradient>
+        </defs>
+        <rect x="0" y="0" width="600" height="52" fill="url(#ef-grad-bot)" filter="url(#ef-rip-bot)"/>
+        <path d="M90,14 L88,4 M200,15 L203,5 M310,14 L307,4 M420,15 L423,5 M510,14 L508,4"
+              stroke="#a78bfa" strokeWidth="0.7" strokeLinecap="round" opacity="0.45"/>
+      </svg>
+    </div>
+
+    {/* ── LEFT torn fabric strip ── */}
+    <div className="absolute top-0 left-0 bottom-0" style={{ width: 46 }}>
+      <svg width="46" height="100%" viewBox="0 0 46 500" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <filter id="ef-rip-left" x="-20%" y="-4%" width="160%" height="108%">
+            <feTurbulence type="turbulence" baseFrequency="0.035 0.065" numOctaves="4" seed="6" result="noise"/>
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="16" xChannelSelector="R" yChannelSelector="G"/>
+          </filter>
+          <linearGradient id="ef-grad-left" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%"   stopColor="#2e0654" stopOpacity="1"/>
+            <stop offset="55%"  stopColor="#5b21b6" stopOpacity="0.95"/>
+            <stop offset="80%"  stopColor="#7c3aed" stopOpacity="0.4"/>
+            <stop offset="100%" stopColor="#8b5cf6" stopOpacity="0"/>
+          </linearGradient>
+        </defs>
+        <rect x="0" y="0" width="46" height="500" fill="url(#ef-grad-left)" filter="url(#ef-rip-left)"/>
+        <path d="M32,80 L42,78 M31,180 L41,182 M32,280 L42,278 M31,380 L41,382"
+              stroke="#a78bfa" strokeWidth="0.6" strokeLinecap="round" opacity="0.4"/>
+      </svg>
+    </div>
+
+    {/* ── RIGHT torn fabric strip ── */}
+    <div className="absolute top-0 right-0 bottom-0" style={{ width: 46 }}>
+      <svg width="46" height="100%" viewBox="0 0 46 500" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <filter id="ef-rip-right" x="-40%" y="-4%" width="160%" height="108%">
+            <feTurbulence type="turbulence" baseFrequency="0.035 0.065" numOctaves="4" seed="14" result="noise"/>
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="16" xChannelSelector="R" yChannelSelector="G"/>
+          </filter>
+          <linearGradient id="ef-grad-right" x1="1" y1="0" x2="0" y2="0">
+            <stop offset="0%"   stopColor="#2e0654" stopOpacity="1"/>
+            <stop offset="55%"  stopColor="#5b21b6" stopOpacity="0.95"/>
+            <stop offset="80%"  stopColor="#7c3aed" stopOpacity="0.4"/>
+            <stop offset="100%" stopColor="#8b5cf6" stopOpacity="0"/>
+          </linearGradient>
+        </defs>
+        <rect x="0" y="0" width="46" height="500" fill="url(#ef-grad-right)" filter="url(#ef-rip-right)"/>
+        <path d="M14,80 L4,78 M15,180 L5,182 M14,280 L4,278 M15,380 L5,382"
+              stroke="#a78bfa" strokeWidth="0.6" strokeLinecap="round" opacity="0.4"/>
+      </svg>
+    </div>
+
+    {/* ── TOP-LEFT: paint star + scrawl marks ── */}
+    <div className="absolute top-0 left-0" style={{ zIndex: 22 }}>
+      <svg width="78" height="78" viewBox="0 0 78 78" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <filter id="ef-star-tl" x="-70%" y="-70%" width="240%" height="240%">
+            <feGaussianBlur stdDeviation="4" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+        {/* Second trace — scribble shadow */}
+        <path d="M34,7 L38,19.5 L52,20 L42,28 L45.5,40.5 L34,33.5 L22.5,40.5 L26,28 L16,20 L30,19.5 Z"
+              stroke="#4c1d95" strokeWidth="2" fill="none" strokeLinejoin="round" opacity="0.6"/>
+        {/* Main star with paint glow */}
+        <path d="M34,5 L38,18 L52,18.5 L42,26.5 L45.5,39 L34,32 L22.5,39 L26,26.5 L16,18.5 L30,18 Z"
+              fill="rgba(91,33,182,0.2)" stroke="#c4b5fd" strokeWidth="2.2" strokeLinejoin="round"
+              filter="url(#ef-star-tl)"/>
+        {/* Rough brush inner highlight */}
+        <path d="M34,10 L37,19.5 L48,20 L40,26 L43,36 L34,30 L25,36 L28,26 L20,20 L31,19.5 Z"
+              fill="none" stroke="#a78bfa" strokeWidth="0.9" strokeLinejoin="round" opacity="0.4"/>
+        {/* Scrawl marks */}
+        <path d="M56,10 L63,8 M54,17 L64,15" stroke="#8b5cf6" strokeWidth="1" strokeLinecap="round" opacity="0.55"/>
+        <path d="M10,54 L18,56 M8,62 L17,63" stroke="#6d28d9" strokeWidth="0.8" strokeLinecap="round" opacity="0.4"/>
+        <text x="60" y="14" fill="#a78bfa" fontSize="10" opacity="0.6" fontFamily="Georgia, serif">×</text>
+        <text x="9" y="48" fill="#7c3aed" fontSize="8" opacity="0.5" fontFamily="Georgia, serif">×</text>
+      </svg>
+    </div>
+
+    {/* ── TOP-RIGHT: paint star + safety pin + chain ── */}
+    <div className="absolute top-0 right-0" style={{ zIndex: 22 }}>
+      <svg width="90" height="200" viewBox="0 0 90 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <filter id="ef-star-tr" x="-70%" y="-70%" width="240%" height="240%">
+            <feGaussianBlur stdDeviation="3.5" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <filter id="ef-pin-glow" x="-60%" y="-20%" width="220%" height="140%">
             <feGaussianBlur stdDeviation="2.5" result="blur"/>
             <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
           </filter>
         </defs>
-        {/* Heart outline (top-right area) */}
-        <path d="M28,18 C28,12 18,8 14,16 C10,24 20,32 28,40 C36,32 46,24 42,16 C38,8 28,12 28,18 Z"
-              fill="none" stroke="#8b5cf6" strokeWidth="1.5" filter="url(#glow-tr)" opacity="0.85"/>
-        {/* Safety pin — needle */}
-        <line x1="72" y1="8" x2="72" y2="42" stroke="#8b5cf6" strokeWidth="2.2" strokeLinecap="round" filter="url(#glow-tr)"/>
-        {/* Pin head (loop) */}
-        <circle cx="72" cy="8" r="3.5" fill="none" stroke="#8b5cf6" strokeWidth="1.8"/>
-        <circle cx="72" cy="8" r="1.5" fill="#8b5cf6" opacity="0.6"/>
-        {/* Safety guard / clasp */}
-        <path d="M72,42 C72,50 58,50 58,42 L58,24 C58,18 64,16 68,19 L72,22"
-              fill="none" stroke="#8b5cf6" strokeWidth="1.6" strokeLinecap="round"/>
-        {/* Chain links hanging from pin */}
-        <ellipse cx="66" cy="58"  rx="4" ry="7"  stroke="#9d7ede" strokeWidth="1.3" fill="none" transform="rotate(-12,66,58)"/>
-        <ellipse cx="62" cy="72"  rx="7" ry="4"  stroke="#7c3aed" strokeWidth="1.3" fill="none" transform="rotate(8,62,72)"/>
-        <ellipse cx="65" cy="86"  rx="4" ry="7"  stroke="#9d7ede" strokeWidth="1.3" fill="none" transform="rotate(-12,65,86)"/>
-        <ellipse cx="61" cy="100" rx="7" ry="4"  stroke="#7c3aed" strokeWidth="1.3" fill="none" transform="rotate(8,61,100)"/>
-        <ellipse cx="64" cy="114" rx="4" ry="7"  stroke="#9d7ede" strokeWidth="1.3" fill="none" transform="rotate(-12,64,114)"/>
-        {/* Chain end loop */}
-        <circle cx="62" cy="128" r="4" fill="none" stroke="#6d28d9" strokeWidth="1.2" opacity="0.7"/>
+
+        {/* Star — top right corner */}
+        <path d="M52,7 L56,19 L70,19.5 L60,27.5 L63.5,40 L52,33 L40.5,40 L44,27.5 L34,19.5 L48,19 Z"
+              fill="rgba(91,33,182,0.2)" stroke="#c4b5fd" strokeWidth="2.2" strokeLinejoin="round"
+              filter="url(#ef-star-tr)"/>
+        <path d="M52,10 L55.5,20 L68,20.5 L58.5,28 L62,38 L52,31.5 L42,38 L45.5,28 L36,20.5 L48.5,20 Z"
+              fill="none" stroke="#8b5cf6" strokeWidth="0.8" strokeLinejoin="round" opacity="0.4"/>
+
+        {/* Safety pin — metallic */}
+        <g filter="url(#ef-pin-glow)">
+          {/* Needle shaft */}
+          <line x1="76" y1="52" x2="76" y2="90" stroke="#e9d5ff" strokeWidth="2.5" strokeLinecap="round"/>
+          {/* Head loop */}
+          <circle cx="76" cy="52" r="5" fill="none" stroke="#e9d5ff" strokeWidth="2.2"/>
+          <circle cx="76" cy="52" r="2.2" fill="#ddd6fe"/>
+          {/* Clasp/guard */}
+          <path d="M76,90 C76,101 62,101 62,90 L62,68 C62,60 69,57 72.5,62 L76,67"
+                fill="rgba(91,33,182,0.15)" stroke="#c4b5fd" strokeWidth="1.8" strokeLinecap="round"/>
+          {/* Pin tip */}
+          <path d="M76,90 L77.5,96" stroke="#e9d5ff" strokeWidth="1.5" strokeLinecap="round" opacity="0.8"/>
+        </g>
+
+        {/* Chain links */}
+        <g>
+          <ellipse cx="71" cy="110" rx="4.5" ry="8"   fill="rgba(91,33,182,0.12)" stroke="#a78bfa" strokeWidth="1.5" transform="rotate(-12,71,110)"/>
+          <ellipse cx="68" cy="127" rx="8"   ry="4.5" fill="rgba(91,33,182,0.12)" stroke="#8b5cf6" strokeWidth="1.5" transform="rotate(6,68,127)"/>
+          <ellipse cx="71" cy="144" rx="4.5" ry="8"   fill="rgba(91,33,182,0.12)" stroke="#a78bfa" strokeWidth="1.5" transform="rotate(-12,71,144)"/>
+          <ellipse cx="68" cy="161" rx="8"   ry="4.5" fill="rgba(91,33,182,0.12)" stroke="#8b5cf6" strokeWidth="1.5" transform="rotate(6,68,161)"/>
+          <ellipse cx="71" cy="178" rx="4.5" ry="8"   fill="rgba(91,33,182,0.12)" stroke="#a78bfa" strokeWidth="1.5" transform="rotate(-12,71,178)"/>
+          {/* End jewel */}
+          <circle cx="69" cy="192" r="6" fill="rgba(91,33,182,0.2)" stroke="#8b5cf6" strokeWidth="1.4"/>
+          <circle cx="69" cy="192" r="3" fill="#7c3aed" opacity="0.7"/>
+        </g>
+
+        {/* Scrawl mark near star */}
+        <text x="18" y="20" fill="#6d28d9" fontSize="9" opacity="0.5" fontFamily="Georgia, serif">×</text>
       </svg>
     </div>
 
-    {/* ── Bottom-right: spray-paint dripping heart ── */}
-    <div className="absolute bottom-0 right-0 pointer-events-none select-none" style={{ transform: 'translate(10px, 10px)', zIndex: 20 }}>
-      <svg width="90" height="90" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+    {/* ── BOTTOM-LEFT: small accent star ── */}
+    <div className="absolute bottom-0 left-0" style={{ zIndex: 22 }}>
+      <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
         <defs>
-          <filter id="glow-br" x="-60%" y="-60%" width="220%" height="220%">
-            <feGaussianBlur stdDeviation="3.5" result="blur"/>
+          <filter id="ef-star-bl" x="-70%" y="-70%" width="240%" height="240%">
+            <feGaussianBlur stdDeviation="3" result="blur"/>
             <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
           </filter>
-          {/* Spray paint texture via turbulence */}
-          <filter id="spray">
-            <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" result="noise"/>
-            <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.5" xChannelSelector="R" yChannelSelector="G"/>
-          </filter>
         </defs>
-        {/* Heart shape with spray paint look */}
-        <path d="M44,20 C44,14 34,10 30,18 C26,26 36,35 44,44 C52,35 62,26 58,18 C54,10 44,14 44,20 Z"
-              fill="rgba(109,40,217,0.30)" stroke="#8b5cf6" strokeWidth="2"
-              filter="url(#glow-br)" strokeLinejoin="round"/>
-        {/* Spray edge (slightly rough) */}
-        <path d="M44,20 C44,14 34,10 30,18 C26,26 36,35 44,44 C52,35 62,26 58,18 C54,10 44,14 44,20 Z"
-              fill="none" stroke="#a78bfa" strokeWidth="0.8" strokeDasharray="2,3" opacity="0.4"/>
-        {/* Main drip */}
-        <path d="M40,44 C39,55 41,62 39,70" stroke="#8b5cf6" strokeWidth="3.5" strokeLinecap="round" filter="url(#glow-br)"/>
-        <ellipse cx="39" cy="72" rx="3.5" ry="4.5" fill="#8b5cf6" filter="url(#glow-br)"/>
-        {/* Second drip */}
-        <path d="M50,43 C51,52 49,57 51,64" stroke="#7c3aed" strokeWidth="2.5" strokeLinecap="round"/>
-        <ellipse cx="51" cy="65.5" rx="2.8" ry="3.5" fill="#7c3aed"/>
-        {/* Thin drip */}
-        <path d="M33,41 C32,48 34,53 32,58" stroke="#a78bfa" strokeWidth="1.8" strokeLinecap="round" opacity="0.75"/>
-        <circle cx="32" cy="59.5" r="2.2" fill="#a78bfa" opacity="0.75"/>
-        {/* Tiny splash dots */}
-        <circle cx="57" cy="38" r="1.2" fill="#8b5cf6" opacity="0.5"/>
-        <circle cx="60" cy="30" r="0.9" fill="#6d28d9" opacity="0.4"/>
-        <circle cx="27" cy="36" r="1" fill="#8b5cf6" opacity="0.45"/>
+        <path d="M26,54 L29,45 L38,44.5 L31.5,39.5 L34,31 L26,36 L18,31 L20.5,39.5 L14,44.5 L23,45 Z"
+              fill="rgba(91,33,182,0.18)" stroke="#a78bfa" strokeWidth="1.8" strokeLinejoin="round"
+              filter="url(#ef-star-bl)"/>
+        <text x="38" y="58" fill="#8b5cf6" fontSize="8" opacity="0.45" fontFamily="Georgia, serif">×</text>
       </svg>
     </div>
 
-    {/* ── Left side subtle scratches ── */}
-    <div className="absolute left-0 top-1/3 pointer-events-none select-none" style={{ zIndex: 20 }}>
-      <svg width="18" height="160" viewBox="0 0 18 160" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M6,8 L11,18 M5,32 L13,40 M7,58 L10,70 M5,92 L12,102 M6,124 L11,136 M7,148 L10,156"
-              stroke="#6d28d9" strokeWidth="0.8" strokeLinecap="round" opacity="0.35"/>
-        <path d="M4,22 L14,24 M4,75 L14,73 M4,112 L14,114"
-              stroke="#8b5cf6" strokeWidth="0.5" strokeLinecap="round" opacity="0.2"/>
-      </svg>
-    </div>
-
-    {/* ── Right side subtle scratches ── */}
-    <div className="absolute right-0 top-1/3 pointer-events-none select-none" style={{ zIndex: 20 }}>
-      <svg width="18" height="160" viewBox="0 0 18 160" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M12,8 L7,18 M13,32 L5,40 M11,58 L8,70 M13,92 L6,102 M12,124 L7,136 M11,148 L8,156"
-              stroke="#6d28d9" strokeWidth="0.8" strokeLinecap="round" opacity="0.35"/>
-        <path d="M14,22 L4,24 M14,75 L4,73 M14,112 L4,114"
-              stroke="#8b5cf6" strokeWidth="0.5" strokeLinecap="round" opacity="0.2"/>
-      </svg>
-    </div>
-  </>
+    {/* ── Outer glow ring (CSS ring applied via wrapper, this adds inner edge shimmer) ── */}
+    <div className="absolute inset-0 pointer-events-none" style={{
+      borderRadius: 'inherit',
+      boxShadow: 'inset 0 0 18px rgba(109,40,217,0.18)',
+    }}/>
+  </div>
 )
 
 /* ─── Sticker layers ────────────────────────────────────────────────────── */
