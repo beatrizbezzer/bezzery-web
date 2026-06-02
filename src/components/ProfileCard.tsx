@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { Avatar } from './ui/Avatar'
 import { Tag, autoVariant } from './ui/Tag'
 import { FollowButton } from './FollowButton'
-import { CardStickerLayer, CardOverlayLayer } from './CardDecorationLayers'
+import { CardStickerLayer, CardOverlayLayer, EmoFrameDecorations } from './CardDecorationLayers'
 import { getBorderShadow } from '../lib/cardDecorations'
 import type { User } from '../types'
 
@@ -25,11 +25,16 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
   const [followModal, setFollowModal] = useState<'followers' | 'following' | null>(null)
 
   const isGradientBorder = user.cardBorder === 'gradient-vp'
+  const isEmoFrame = user.cardBorder === 'emo-frame'
   const borderShadow = getBorderShadow(user.cardBorder)
 
   const cardInner = (
     <div
-      className={`relative bg-bz-card rounded-xl overflow-hidden ${isGradientBorder ? '' : 'border border-bz-surface'}`}
+      className={`relative bg-bz-card overflow-hidden ${
+        isEmoFrame ? 'rounded-[22px]' :
+        isGradientBorder ? 'rounded-xl' :
+        'rounded-xl border border-bz-surface'
+      }`}
     >
       {/* Banner */}
       <div className="relative h-44 sm:h-56">
@@ -149,7 +154,20 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
     <>
       <div className="relative">
         {/* Border wrapper */}
-        {isGradientBorder ? (
+        {isEmoFrame ? (
+          <div style={{
+            borderRadius: '24px',
+            boxShadow: [
+              '0 0 0 2px #8b5cf6',
+              '0 0 0 4px rgba(0,0,0,0.95)',
+              '0 0 0 6px #6d28d9',
+              '0 0 28px rgba(109,40,217,0.55)',
+              '0 0 70px rgba(109,40,217,0.18)',
+            ].join(', '),
+          }}>
+            {cardInner}
+          </div>
+        ) : isGradientBorder ? (
           <div className="p-[2px] rounded-xl" style={{ background: 'linear-gradient(135deg, #8b5cf6, #ec4899)' }}>
             {cardInner}
           </div>
@@ -163,6 +181,7 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
 
         {/* Sticker decoration (outside card so it can overflow edges) */}
         {user.cardSticker && <CardStickerLayer id={user.cardSticker} />}
+        {isEmoFrame && <EmoFrameDecorations />}
       </div>
 
       {followModal && (

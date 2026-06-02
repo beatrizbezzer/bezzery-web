@@ -26,6 +26,21 @@ const MiniCard: React.FC<{ children?: React.ReactNode }> = ({ children }) => (
 )
 
 const BorderPreview: React.FC<{ id: string }> = ({ id }) => {
+  if (id === 'emo-frame') {
+    return (
+      <div style={{
+        borderRadius: '12px',
+        boxShadow: '0 0 0 1.5px #8b5cf6, 0 0 0 3px rgba(0,0,0,0.95), 0 0 0 4.5px #6d28d9, 0 0 14px rgba(109,40,217,0.6)',
+        position: 'relative',
+      }}>
+        <MiniCard>
+          <span className="absolute -top-2 -left-2 text-[10px] select-none" style={{ color: '#8b5cf6', lineHeight: 1 }}>✦</span>
+          <span className="absolute -top-1 -right-1 text-[8px] select-none" style={{ color: '#6d28d9' }}>♥</span>
+          <span className="absolute -bottom-1.5 -right-1.5 text-[10px] select-none" style={{ color: '#8b5cf6' }}>♥</span>
+        </MiniCard>
+      </div>
+    )
+  }
   if (id === 'gradient-vp') {
     return (
       <div className="p-[2px] rounded-lg w-full" style={{ background: 'linear-gradient(135deg, #8b5cf6, #ec4899)' }}>

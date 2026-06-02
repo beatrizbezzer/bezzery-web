@@ -4,6 +4,7 @@ export interface CardDecoration {
 }
 
 export const CARD_BORDERS: CardDecoration[] = [
+  { id: 'emo-frame', label: 'Emo Frame' },
   { id: 'violet-glow', label: 'Violet Glow' },
   { id: 'electric-glow', label: 'Electric Glow' },
   { id: 'neon-pink', label: 'Neon Pink' },
