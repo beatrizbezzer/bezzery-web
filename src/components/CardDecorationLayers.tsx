@@ -71,6 +71,99 @@ export const EmoFrameDecorations: React.FC = () => (
   </div>
 )
 
+/* ─── Safety Pins Border ────────────────────────────────────────────────── */
+
+const SafetyPin: React.FC = () => (
+  <svg width="10" height="26" viewBox="0 0 10 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <line x1="5" y1="23" x2="5" y2="4" stroke="#ccc8dc" strokeWidth="2.2" strokeLinecap="round"/>
+    <circle cx="5" cy="3.5" r="3" fill="none" stroke="#e0dcea" strokeWidth="1.7"/>
+    <circle cx="5" cy="3.5" r="1.3" fill="#b8b4cc"/>
+    <path d="M5,23 C5,30 0,30 0,23 L0,12 C0,7.5 3.5,6 4.5,9.5 L5,12"
+          fill="rgba(60,50,80,0.28)" stroke="#a89ec0" strokeWidth="1.4" strokeLinecap="round"/>
+    <line x1="5" y1="23" x2="5.7" y2="27" stroke="#e0dcea" strokeWidth="1.2" strokeLinecap="round" opacity="0.7"/>
+  </svg>
+)
+
+export const SafetyPinsBorderLayer: React.FC = () => (
+  <div className="absolute inset-0 pointer-events-none select-none" style={{ zIndex: 20, overflow: 'visible' }}>
+    {[16, 33, 50, 67, 84].map(p => (
+      <div key={`pt${p}`} className="absolute" style={{ top: -9, left: `${p}%`, transform: 'translateX(-50%)' }}>
+        <SafetyPin />
+      </div>
+    ))}
+    {[16, 33, 50, 67, 84].map(p => (
+      <div key={`pb${p}`} className="absolute" style={{ bottom: -9, left: `${p}%`, transform: 'translateX(-50%) rotate(180deg)' }}>
+        <SafetyPin />
+      </div>
+    ))}
+    {[20, 40, 60, 80].map(p => (
+      <div key={`pl${p}`} className="absolute" style={{ left: -9, top: `${p}%`, transform: 'translateY(-50%) rotate(-90deg)' }}>
+        <SafetyPin />
+      </div>
+    ))}
+    {[20, 40, 60, 80].map(p => (
+      <div key={`pr${p}`} className="absolute" style={{ right: -9, top: `${p}%`, transform: 'translateY(-50%) rotate(90deg)' }}>
+        <SafetyPin />
+      </div>
+    ))}
+  </div>
+)
+
+/* ─── Dark Chain Border ──────────────────────────────────────────────────── */
+
+export const ChainDarkBorderLayer: React.FC = () => (
+  <div className="absolute inset-0 pointer-events-none select-none" style={{ zIndex: 20, overflow: 'visible' }}>
+    {/* Top */}
+    <div className="absolute left-0 right-0" style={{ top: -7, height: 14 }}>
+      <svg width="100%" height="14" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <pattern id="cd-top" x="0" y="0" width="22" height="14" patternUnits="userSpaceOnUse">
+            <ellipse cx="6"  cy="7" rx="5" ry="3" fill="rgba(55,45,72,0.35)" stroke="#5c4e70" strokeWidth="1.6" transform="rotate(25 6 7)"/>
+            <ellipse cx="16" cy="7" rx="5" ry="3" fill="rgba(55,45,72,0.35)" stroke="#4a3d5e" strokeWidth="1.6" transform="rotate(-25 16 7)"/>
+          </pattern>
+        </defs>
+        <rect width="100%" height="14" fill="url(#cd-top)"/>
+      </svg>
+    </div>
+    {/* Bottom */}
+    <div className="absolute left-0 right-0" style={{ bottom: -7, height: 14 }}>
+      <svg width="100%" height="14" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <pattern id="cd-bot" x="0" y="0" width="22" height="14" patternUnits="userSpaceOnUse">
+            <ellipse cx="6"  cy="7" rx="5" ry="3" fill="rgba(55,45,72,0.35)" stroke="#5c4e70" strokeWidth="1.6" transform="rotate(-25 6 7)"/>
+            <ellipse cx="16" cy="7" rx="5" ry="3" fill="rgba(55,45,72,0.35)" stroke="#4a3d5e" strokeWidth="1.6" transform="rotate(25 16 7)"/>
+          </pattern>
+        </defs>
+        <rect width="100%" height="14" fill="url(#cd-bot)"/>
+      </svg>
+    </div>
+    {/* Left */}
+    <div className="absolute top-0 bottom-0" style={{ left: -7, width: 14 }}>
+      <svg height="100%" width="14" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <pattern id="cd-left" x="0" y="0" width="14" height="22" patternUnits="userSpaceOnUse">
+            <ellipse cx="7" cy="6"  rx="3" ry="5" fill="rgba(55,45,72,0.35)" stroke="#5c4e70" strokeWidth="1.6" transform="rotate(25 7 6)"/>
+            <ellipse cx="7" cy="16" rx="3" ry="5" fill="rgba(55,45,72,0.35)" stroke="#4a3d5e" strokeWidth="1.6" transform="rotate(-25 7 16)"/>
+          </pattern>
+        </defs>
+        <rect width="14" height="100%" fill="url(#cd-left)"/>
+      </svg>
+    </div>
+    {/* Right */}
+    <div className="absolute top-0 bottom-0" style={{ right: -7, width: 14 }}>
+      <svg height="100%" width="14" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <pattern id="cd-right" x="0" y="0" width="14" height="22" patternUnits="userSpaceOnUse">
+            <ellipse cx="7" cy="6"  rx="3" ry="5" fill="rgba(55,45,72,0.35)" stroke="#5c4e70" strokeWidth="1.6" transform="rotate(-25 7 6)"/>
+            <ellipse cx="7" cy="16" rx="3" ry="5" fill="rgba(55,45,72,0.35)" stroke="#4a3d5e" strokeWidth="1.6" transform="rotate(25 7 16)"/>
+          </pattern>
+        </defs>
+        <rect width="14" height="100%" fill="url(#cd-right)"/>
+      </svg>
+    </div>
+  </div>
+)
+
 /* ─── Sticker layers ────────────────────────────────────────────────────── */
 
 export const CardStickerLayer: React.FC<{ id: string }> = ({ id }) => {

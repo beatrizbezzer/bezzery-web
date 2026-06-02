@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { Avatar } from './ui/Avatar'
 import { Tag, autoVariant } from './ui/Tag'
 import { FollowButton } from './FollowButton'
-import { CardStickerLayer, CardOverlayLayer, EmoFrameDecorations } from './CardDecorationLayers'
+import { CardStickerLayer, CardOverlayLayer, EmoFrameDecorations, SafetyPinsBorderLayer, ChainDarkBorderLayer } from './CardDecorationLayers'
 import { getBorderShadow } from '../lib/cardDecorations'
 import type { User } from '../types'
 
@@ -26,13 +26,14 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
 
   const isGradientBorder = user.cardBorder === 'gradient-vp'
   const isEmoFrame = user.cardBorder === 'emo-frame'
+  const isCheckerPunk = user.cardBorder === 'checker-punk'
   const borderShadow = getBorderShadow(user.cardBorder)
 
   const cardInner = (
     <div
       className={`relative bg-bz-card overflow-hidden ${
         isEmoFrame ? 'rounded-[22px]' :
-        isGradientBorder ? 'rounded-xl' :
+        isGradientBorder || isCheckerPunk ? 'rounded-xl' :
         'rounded-xl border border-bz-surface'
       }`}
     >
@@ -171,6 +172,20 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
           <div className="p-[2px] rounded-xl" style={{ background: 'linear-gradient(135deg, #8b5cf6, #ec4899)' }}>
             {cardInner}
           </div>
+        ) : isCheckerPunk ? (
+          <div className="p-1 rounded-xl" style={{
+            backgroundColor: '#0d0d12',
+            backgroundImage: [
+              'linear-gradient(45deg, #f0e8f8 25%, transparent 25%)',
+              'linear-gradient(-45deg, #f0e8f8 25%, transparent 25%)',
+              'linear-gradient(45deg, transparent 75%, #f0e8f8 75%)',
+              'linear-gradient(-45deg, transparent 75%, #f0e8f8 75%)',
+            ].join(', '),
+            backgroundSize: '8px 8px',
+            backgroundPosition: '0 0, 0 4px, 4px -4px, -4px 0px',
+          }}>
+            {cardInner}
+          </div>
         ) : borderShadow ? (
           <div style={{ borderRadius: '12px', boxShadow: borderShadow }}>
             {cardInner}
@@ -182,6 +197,8 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
         {/* Sticker decoration (outside card so it can overflow edges) */}
         {user.cardSticker && <CardStickerLayer id={user.cardSticker} />}
         {isEmoFrame && <EmoFrameDecorations />}
+        {user.cardBorder === 'safety-pins' && <SafetyPinsBorderLayer />}
+        {user.cardBorder === 'chain-dark' && <ChainDarkBorderLayer />}
       </div>
 
       {followModal && (

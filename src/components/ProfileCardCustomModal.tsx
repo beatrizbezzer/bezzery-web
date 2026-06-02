@@ -52,6 +52,80 @@ const BorderPreview: React.FC<{ id: string }> = ({ id }) => {
       </div>
     )
   }
+  if (id === 'checker-punk') {
+    return (
+      <div style={{
+        padding: '4px', borderRadius: '10px', overflow: 'hidden',
+        backgroundColor: '#0d0d12',
+        backgroundImage: [
+          'linear-gradient(45deg, #f0e8f8 25%, transparent 25%)',
+          'linear-gradient(-45deg, #f0e8f8 25%, transparent 25%)',
+          'linear-gradient(45deg, transparent 75%, #f0e8f8 75%)',
+          'linear-gradient(-45deg, transparent 75%, #f0e8f8 75%)',
+        ].join(', '),
+        backgroundSize: '8px 8px',
+        backgroundPosition: '0 0, 0 4px, 4px -4px, -4px 0px',
+      }}>
+        <div style={{ borderRadius: '6px', overflow: 'hidden' }}><MiniCard /></div>
+      </div>
+    )
+  }
+  if (id === 'safety-pins') {
+    const pinPath = 'M5,22 L5,4 M5,4 A3,3 0 1 1 5,3.9 M5,22 C5,29 0,29 0,22 L0,12 C0,8 3.5,6 4.5,10 L5,12'
+    return (
+      <div className="relative overflow-visible" style={{ paddingTop: '10px', paddingBottom: '10px' }}>
+        <MiniCard />
+        {[20, 50, 80].map(p => (
+          <div key={p} className="absolute" style={{ top: 0, left: `${p}%`, transform: 'translateX(-50%)' }}>
+            <svg width="7" height="16" viewBox="0 0 10 26" fill="none">
+              <line x1="5" y1="23" x2="5" y2="4" stroke="#ccc8dc" strokeWidth="2.2" strokeLinecap="round"/>
+              <circle cx="5" cy="3.5" r="3" fill="none" stroke="#e0dcea" strokeWidth="1.7"/>
+              <circle cx="5" cy="3.5" r="1.3" fill="#b8b4cc"/>
+              <path d={pinPath} fill="rgba(60,50,80,0.28)" stroke="#a89ec0" strokeWidth="1.4" strokeLinecap="round"/>
+            </svg>
+          </div>
+        ))}
+        {[20, 50, 80].map(p => (
+          <div key={p} className="absolute" style={{ bottom: 0, left: `${p}%`, transform: 'translateX(-50%) rotate(180deg)' }}>
+            <svg width="7" height="16" viewBox="0 0 10 26" fill="none">
+              <line x1="5" y1="23" x2="5" y2="4" stroke="#ccc8dc" strokeWidth="2.2" strokeLinecap="round"/>
+              <circle cx="5" cy="3.5" r="3" fill="none" stroke="#e0dcea" strokeWidth="1.7"/>
+              <circle cx="5" cy="3.5" r="1.3" fill="#b8b4cc"/>
+            </svg>
+          </div>
+        ))}
+      </div>
+    )
+  }
+  if (id === 'chain-dark') {
+    return (
+      <div className="relative overflow-visible" style={{ paddingTop: '8px', paddingBottom: '8px' }}>
+        <MiniCard />
+        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 8 }}>
+          <svg width="100%" height="8" xmlns="http://www.w3.org/2000/svg" style={{ display: 'block' }}>
+            <defs>
+              <pattern id="mp-chain-t" x="0" y="0" width="16" height="8" patternUnits="userSpaceOnUse">
+                <ellipse cx="4"  cy="4" rx="3.5" ry="2.2" fill="rgba(55,45,72,0.4)" stroke="#5c4e70" strokeWidth="1.2" transform="rotate(25 4 4)"/>
+                <ellipse cx="12" cy="4" rx="3.5" ry="2.2" fill="rgba(55,45,72,0.4)" stroke="#4a3d5e" strokeWidth="1.2" transform="rotate(-25 12 4)"/>
+              </pattern>
+            </defs>
+            <rect width="100%" height="8" fill="url(#mp-chain-t)"/>
+          </svg>
+        </div>
+        <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 8 }}>
+          <svg width="100%" height="8" xmlns="http://www.w3.org/2000/svg" style={{ display: 'block' }}>
+            <defs>
+              <pattern id="mp-chain-b" x="0" y="0" width="16" height="8" patternUnits="userSpaceOnUse">
+                <ellipse cx="4"  cy="4" rx="3.5" ry="2.2" fill="rgba(55,45,72,0.4)" stroke="#5c4e70" strokeWidth="1.2" transform="rotate(-25 4 4)"/>
+                <ellipse cx="12" cy="4" rx="3.5" ry="2.2" fill="rgba(55,45,72,0.4)" stroke="#4a3d5e" strokeWidth="1.2" transform="rotate(25 12 4)"/>
+              </pattern>
+            </defs>
+            <rect width="100%" height="8" fill="url(#mp-chain-b)"/>
+          </svg>
+        </div>
+      </div>
+    )
+  }
   if (id === 'gradient-vp') {
     return (
       <div className="p-[2px] rounded-lg w-full" style={{ background: 'linear-gradient(135deg, #8b5cf6, #ec4899)' }}>
