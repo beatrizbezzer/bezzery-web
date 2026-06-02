@@ -11,14 +11,63 @@ export function getBorderShadow(borderId: string | null | undefined): string | n
 
 /* ─── Emo Frame ─────────────────────────────────────────────────────────── */
 
+const BrushStar: React.FC<{ size?: number; color?: string; opacity?: number }> = ({
+  size = 32, color = '#8b5cf6', opacity = 1,
+}) => (
+  <svg width={size} height={size} viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <filter id="bstar-glow" x="-60%" y="-60%" width="220%" height="220%">
+        <feGaussianBlur stdDeviation="2.5" result="b"/>
+        <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+    </defs>
+    {/* Thick brushy outer trace */}
+    <path
+      d="M16,2 L19.5,12.2 L30.5,12.5 L22,19.5 L25,30 L16,23.5 L7,30 L10,19.5 L1.5,12.5 L12.5,12.2 Z"
+      fill="none" stroke={color} strokeWidth="2.8" strokeLinejoin="round" strokeLinecap="round"
+      opacity={opacity} filter="url(#bstar-glow)"
+    />
+    {/* Second rough inner stroke — gives the brush layering feel */}
+    <path
+      d="M16,4.5 L19,13.5 L29,13.8 L21,20.2 L23.5,29 L16,23 L8.5,29 L11,20.2 L3,13.8 L13,13.5 Z"
+      fill="none" stroke={color} strokeWidth="1.2" strokeLinejoin="round" strokeLinecap="round"
+      opacity={opacity * 0.45}
+    />
+    {/* Rough brush flick at tip of each main point */}
+    <path d="M16,2 L15.2,0.5 M16,2 L16.8,0.5" stroke={color} strokeWidth="1.1" strokeLinecap="round" opacity={opacity * 0.6}/>
+    <path d="M30.5,12.5 L31.8,11.8" stroke={color} strokeWidth="1" strokeLinecap="round" opacity={opacity * 0.5}/>
+    <path d="M1.5,12.5 L0.2,11.8" stroke={color} strokeWidth="1" strokeLinecap="round" opacity={opacity * 0.5}/>
+    <path d="M25,30 L25.8,31.5" stroke={color} strokeWidth="1" strokeLinecap="round" opacity={opacity * 0.5}/>
+    <path d="M7,30 L6.2,31.5" stroke={color} strokeWidth="1" strokeLinecap="round" opacity={opacity * 0.5}/>
+  </svg>
+)
+
 export const EmoFrameDecorations: React.FC = () => (
   <div className="absolute inset-0 pointer-events-none select-none" style={{ zIndex: 20, overflow: 'visible' }}>
-    <span className="absolute -top-2 -left-2 text-[10px]" style={{ color: '#8b5cf6', lineHeight: 1 }}>✦</span>
-    <span className="absolute -top-2 -right-2 text-[10px]" style={{ color: '#a78bfa' }}>✦</span>
-    <span className="absolute -bottom-2 -left-2 text-[10px]" style={{ color: '#6d28d9' }}>✦</span>
-    <span className="absolute -bottom-2 -right-2 text-[10px]" style={{ color: '#8b5cf6' }}>✦</span>
-    <span className="absolute top-1/2 -left-2 text-[8px]" style={{ color: '#7c3aed', transform: 'translateY(-50%)' }}>✦</span>
-    <span className="absolute top-1/2 -right-2 text-[8px]" style={{ color: '#7c3aed', transform: 'translateY(-50%)' }}>✦</span>
+    {/* Top-left */}
+    <div className="absolute" style={{ top: -14, left: -14 }}>
+      <BrushStar size={36} color="#a78bfa" opacity={0.95}/>
+    </div>
+    {/* Top-right */}
+    <div className="absolute" style={{ top: -14, right: -14 }}>
+      <BrushStar size={30} color="#8b5cf6" opacity={0.85}/>
+    </div>
+    {/* Bottom-left */}
+    <div className="absolute" style={{ bottom: -14, left: -14 }}>
+      <BrushStar size={28} color="#7c3aed" opacity={0.8}/>
+    </div>
+    {/* Bottom-right */}
+    <div className="absolute" style={{ bottom: -14, right: -14 }}>
+      <BrushStar size={34} color="#c4b5fd" opacity={0.9}/>
+    </div>
+    {/* Mid-left small */}
+    <div className="absolute" style={{ top: '50%', left: -12, transform: 'translateY(-50%)' }}>
+      <BrushStar size={20} color="#6d28d9" opacity={0.7}/>
+    </div>
+    {/* Mid-right small */}
+    <div className="absolute" style={{ top: '50%', right: -12, transform: 'translateY(-50%)' }}>
+      <BrushStar size={20} color="#7c3aed" opacity={0.7}/>
+    </div>
   </div>
 )
 
