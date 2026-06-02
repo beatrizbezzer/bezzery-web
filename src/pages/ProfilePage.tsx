@@ -62,8 +62,23 @@ export const ProfilePage: React.FC = () => {
 
   const isOwnProfile = currentUser?.username === username
 
-  const bgImageUrl = profile?.bgImage
-    ? PROFILE_BACKGROUNDS.find((b) => b.id === profile.bgImage)?.url
+  // For own profile, decorations come from authStore (always up-to-date after save).
+  // For other profiles they come from the API fetch.
+  const displayProfile: User | null = profile
+    ? isOwnProfile && currentUser
+      ? {
+          ...profile,
+          bgImage: currentUser.bgImage ?? profile.bgImage,
+          profileEffect: currentUser.profileEffect ?? profile.profileEffect,
+          cardBorder: currentUser.cardBorder ?? profile.cardBorder,
+          cardSticker: currentUser.cardSticker ?? profile.cardSticker,
+          cardOverlay: currentUser.cardOverlay ?? profile.cardOverlay,
+        }
+      : profile
+    : null
+
+  const bgImageUrl = displayProfile?.bgImage
+    ? PROFILE_BACKGROUNDS.find((b) => b.id === displayProfile.bgImage)?.url
     : undefined
 
   return (
@@ -83,7 +98,7 @@ export const ProfilePage: React.FC = () => {
         {bgImageUrl && <div className="absolute inset-0 bg-bz-black/55" />}
         {!bgImageUrl && <div className="absolute top-24 right-8 w-72 h-72 bg-bz-pink/5 rounded-full blur-3xl" />}
         {!bgImageUrl && <div className="absolute top-96 left-8 w-56 h-56 bg-bz-violet/6 rounded-full blur-3xl" />}
-        <ProfileEffect effect={profile?.profileEffect} />
+        <ProfileEffect effect={displayProfile?.profileEffect} />
       </div>
 
       <main className="max-w-2xl mx-auto px-4 py-8 relative">
@@ -102,10 +117,10 @@ export const ProfilePage: React.FC = () => {
               </div>
             </div>
           </div>
-        ) : profile ? (
+        ) : displayProfile ? (
           <div className="mb-6">
             <ProfileCard
-              user={profile}
+              user={displayProfile}
               isOwnProfile={isOwnProfile}
               onFollowToggle={handleFollowToggle}
             />
@@ -116,7 +131,7 @@ export const ProfilePage: React.FC = () => {
         <div className="flex items-center gap-3 mb-6">
           <div className="flex-1 h-px bg-bz-surface" />
           <span className="text-xs font-mono text-bz-white/25 uppercase tracking-wider">
-            {isOwnProfile ? t('feed.latest') : `${profile?.name ?? username}'s buzzes`}
+            {isOwnProfile ? t('feed.latest') : `${displayProfile?.name ?? username}'s buzzes`}
           </span>
           <div className="flex-1 h-px bg-bz-surface" />
         </div>
