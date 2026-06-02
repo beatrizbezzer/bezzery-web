@@ -46,27 +46,27 @@ export const EmoFrameDecorations: React.FC = () => (
   <div className="absolute inset-0 pointer-events-none select-none" style={{ zIndex: 20, overflow: 'visible' }}>
     {/* Top-left */}
     <div className="absolute" style={{ top: -14, left: -14 }}>
-      <BrushStar size={36} color="#a78bfa" opacity={0.95}/>
+      <BrushStar size={36} color="#4b2952" opacity={0.95}/>
     </div>
     {/* Top-right */}
     <div className="absolute" style={{ top: -14, right: -14 }}>
-      <BrushStar size={30} color="#8b5cf6" opacity={0.85}/>
+      <BrushStar size={30} color="#4b2952" opacity={0.85}/>
     </div>
     {/* Bottom-left */}
     <div className="absolute" style={{ bottom: -14, left: -14 }}>
-      <BrushStar size={28} color="#7c3aed" opacity={0.8}/>
+      <BrushStar size={28} color="#4b2952" opacity={0.8}/>
     </div>
     {/* Bottom-right */}
     <div className="absolute" style={{ bottom: -14, right: -14 }}>
-      <BrushStar size={34} color="#c4b5fd" opacity={0.9}/>
+      <BrushStar size={34} color="#4b2952" opacity={0.9}/>
     </div>
     {/* Mid-left small */}
     <div className="absolute" style={{ top: '50%', left: -12, transform: 'translateY(-50%)' }}>
-      <BrushStar size={20} color="#6d28d9" opacity={0.7}/>
+      <BrushStar size={20} color="#4b2952" opacity={0.7}/>
     </div>
     {/* Mid-right small */}
     <div className="absolute" style={{ top: '50%', right: -12, transform: 'translateY(-50%)' }}>
-      <BrushStar size={20} color="#7c3aed" opacity={0.7}/>
+      <BrushStar size={20} color="#4b2952" opacity={0.7}/>
     </div>
   </div>
 )
